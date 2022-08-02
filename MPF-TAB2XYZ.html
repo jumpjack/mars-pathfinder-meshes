@@ -1,0 +1,381 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <body>
+<center><h1>Mars pathfinder 3d data converter</h1></center>
+Converts <a href="https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/data/">.tab files</a> into pointcloud
+and save to PLY or XYZ format with texture.<br>
+Texture must be provided as uncompressed PPM image (converted from original RGB (color) or <a href="https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/extras/">JPG</a> (B/W) texture).<br>
+Example .tab file: <a href="https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/data/i1246925713l_0070063640_3D.tab">https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/data/i1246925713l_0070063640_3D.tab</a><br>
+JPG texture: <a href="https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/extras/pi1246925713_007006364lt.jpg">pi1246925713_007006364lt.jpg</a><br>
+PPM texture: <a href=""></a><br>
+Compressed WRL file: <a href="https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/extras/pi1246925713_007006364l.wrz">https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/extras/pi1246925713_007006364l.wrz</a><br>
+<br>
+Load .TAB + .PPM: <input type="file" id="inpVSTfile" name = "inpVSTfile" width="100" accept=".tab,.PPM" multiple><br>
+<span id="status" name="status" >processing status</span><br>
+<span id="file_status" name="file_status" >file status</span><br>
+<span id="file_length" name="file_length" >file length</span><br>
+<button id="PLY" name="PLY" onclick = "savePLY()">Save as .PLY</button><br>
+<br>
+<button id="XYZ" name="XYZ" onclick = "saveXYZ()">Save as .XYZ</button><br>
+<br>
+-----<br>
+<canvas id="texture" name="texture" width="256" height="248"></canvas><br>
+-----<br>
+<script src="KaitaiStream.js"></script>
+<script src="ppm.js"></script>
+
+<script>
+// Convert all .TAB files of Mars Pathfinder Archive into one single textured pointcloud, and save it in XYZ format.
+// To do: save in PDS .img format for import in Blender
+
+// 0.2.0 - First working version (.txt export); B/W texture values in .TAB are disregarded in
+//         favour of .png color files obtained from conversion of original .rgb files in to .ppm.
+// 0.1.0 - First version with PPM decoding working properly.
+
+/* TAB format
+name            PDS typetext     PDS type code   chars     values        binary size
+LINE_NUMBER      ASCII_INTEGER    I3              3 chars   (1..248)      1 byte
+SAMPLE_NUMBER    ASCII_INTEGER    I3              3 chars   (1..256)      1 byte
+X_COORDINATE     ASCII_REAL       F7.2            7 chars   (+xxx.xx)     32 bit
+Y_COORDINATE     ASCII_REAL       F7.2            7 chars   (+xxx.xx)     32 bit
+Z_COORDINATE     ASCII_REAL       F7.2            7 chars   (+xxx.xx)     32 bit
+PIXEL_VALUE      ASCII_INTEGER    I4              4 chars   (0..4095)     12 bit --> 16 bit, 2 bytes  (texture)
+
+*/
+
+/* PDS label minimal items to recreate from .TAB data (used by Blender import script):
+
+
+OBJECT                            = IMAGE
+  LINES                           = 1024                                         <<---- Lines                        --> 248 for MPF
+  LINE_SAMPLES                    = 1024                                         <<---- Columns/samples              --> 256 for MPF
+  SAMPLE_TYPE                     = MSB_INTEGER                                  <<---- Read, but not actually used?  
+  SAMPLE_BITS                     = 16                                           <<---- Read, but not actually used? 
+END_OBJECT                        = IMAGE
+
+
+GROUP                             = ROVER_COORDINATE_SYSTEM
+  ORIGIN_OFFSET_VECTOR            = (-17.9942,2.68977,-0.829304)                 <<<-------- MPF lander had fixed position --> (0,0,0) for MPF
+END_GROUP                         = ROVER_COORDINATE_SYSTEM
+
+
+
+OBJECT                         = IMAGE_HEADER
+ BYTES                         = 14336                                           <<<<<<<<<----- no vicar label ---> 0 for MPF
+END_OBJECT                     = IMAGE_HEADER
+
+END                                                                              <<<<---- Label end
+      
+
+*/
+
+/*
+A PD3 .img file for XYZ product is made of:
+  - PDS label
+  - VICAR label
+  - image data
+        |
+        +--- Band 1
+        |    |
+        |    +---- Line 1
+        |    |      |
+        |    |      +---- Samples 1..256 (Float32 values for X)
+        |    |
+        |    +---- Line ...
+        |    |
+        |    +---- Line 248
+        |
+        |
+        |
+        +--- Band 2
+        |    |
+        |    +---- Line 1
+        |    |      |
+        |    |      +---- Samples 1..256 (Float32 values for Y
+        |    |
+        |    +---- Line ...
+        |    |
+        |    +---- Line 248
+        |
+        |
+        |
+        +--- Band 3
+            |
+            +---- Line 1
+            |      |
+            |      +---- Samples 1..256 (Float32 values for Z)
+            |
+            +---- Line ...
+            |
+            +---- Line 248
+
+*/
+
+
+PDS_LABEL_IMAGE = "" +
+"OBJECT                            = IMAGE\n"+
+"  LINES                           = 256\n" + 
+"  LINE_SAMPLES                    = 248\n"
+"  SAMPLE_TYPE                     = MSB_INTEGER\n" +   
+"  SAMPLE_BITS                     = 16\n" +  
+"END_OBJECT                        = IMAGE";
+
+PDS_LABEL_ROVER = "" +
+"GROUP                             = ROVER_COORDINATE_SYSTEM\n" + 
+"  ORIGIN_OFFSET_VECTOR            = (0,0,0)\n" + 
+"END_GROUP                         = ROVER_COORDINATE_SYSTEM\n";
+
+PDS_LABEL_VICAR = "" +
+"OBJECT                         = IMAGE_HEADER\n" + 
+" BYTES                         = 0\n" + 
+"END_OBJECT                     = IMAGE_HEADER";
+
+PDS_LABEL = PDS_LABEL_IMAGE + PDS_LABEL_ROVER + PDS_LABEL_VICAR;
+
+
+  canvas = document.getElementById('texture');
+  ctx = canvas.getContext('2d');
+  canvasWidth = 1024;
+  canvasHeight = 1024;
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+  ctx.rect(0, 0, canvasWidth, canvasHeight);
+  ctx.fillStyle = 'blue';
+  ctx.fill();
+
+
+   processedPPM = 0;
+   processedTab = 0;
+
+  myImg = null;
+  
+  PPMComponents = []; 
+  RGBimages = [];
+  RGBimagesNames = [];
+
+  PLY_HEADER_BASE = "" +
+    "ply\n" +
+    "format ascii 1.0\n" +
+    "comment Created by VST JS convereter\n" +
+    "element vertex VVVV\n" +
+    "property float x\n" +
+    "property float y\n" +
+    "property float z\n" +
+    "element face FFFF\n" +
+    "property list uchar int vertex_index\n" +
+    "end_header\n"
+ 
+  const VST_Selector = document.getElementById('inpVSTfile');
+  VST_Selector.addEventListener('change', (event) => {
+    loadVST(event.target.files)
+  });
+
+
+  function saveFile(fileContent, filename,status_id) {
+    myBlob = new Blob([fileContent], {type: "application/octet-stream"});
+    var url = window.URL.createObjectURL(myBlob);
+    var anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = filename;
+//  a(anchor);
+        anchor.addEventListener('load', (event) => {
+      console.log("LOAD");
+    });
+
+        anchor.addEventListener('ended', (event) => {
+      console.log("ENDED");
+    });
+
+        anchor.addEventListener('loadeddata', (event) => {
+      console.log("loadeddata");
+    });
+
+        anchor.addEventListener('loadstart', (event) => {
+      console.log("loadstart");
+    });
+        anchor.addEventListener('mousedown', (event) => {
+      console.log("mousedown");
+    });
+
+
+    anchor.click();
+    window.URL.revokeObjectURL(url);
+        document.getElementById(status_id).innerHTML = "Saved to " + filename;
+  }
+
+function processPPM(fileHandler, myName, tabHandler) {
+//console.log("   PROCESS PPM:",fileHandler.name, myName, tabHandler.name);
+      var reader = new FileReader();
+      reader.addEventListener('load', (event) => {   
+//console.log("   done reading of " + myName);      
+        var rawFileContents = event.target.result;
+        var fileContentsUInt8 = new Uint8Array(rawFileContents); // Extract from the generic ArrayBuffer an array of Unsigned Integers (0..255)
+        var st = new KaitaiStream(fileContentsUInt8);
+        try {
+         var myPPM = new Ppm(st);
+pippo = myPPM;         
+         } catch (e) {
+console.log(">>>>>>>>>>>>>>> Kaitai error in file " + myName);    
+            return;  
+         }
+        var RGBimage = [];
+        var rawData = [];                      
+        for (var valIdx=0;  valIdx <  myPPM.image.data.length;  valIdx++) {
+         rawData.push(myPPM.image.data[valIdx]);
+        }
+//console.log("   Color data stored.");           
+        RGBimages.push(rawData);
+        RGBimagesNames.push(myName);
+        processedTab = 0;
+        processedPPM++;
+//console.log("     Now processing TABS:");          
+        processTAB(tabHandler,myName,rawData);             
+      });
+//console.log("   Reading " + fileHandler.name + " from disk...");      
+      reader.readAsArrayBuffer(fileHandler); 
+}
+
+
+function processTAB(fileHandler, myName,RGBimage) {
+//console.log("TABprocess", myName);
+      var reader = new FileReader();
+      reader.addEventListener('load', (event) => {   
+        var rawFileContents = event.target.result;
+        var fileContentsUInt8 = new Uint8Array(rawFileContents); // Extract from the generic ArrayBuffer an array of Unsigned Integers (0..255)
+
+         processedTab++;
+//console.log("TAB:", myName, processedTab);
+          var UTF8decoder = new TextDecoder();
+          var UTF8string = UTF8decoder.decode(fileContentsUInt8);  // Interpret byte array as a string of UTF8 characters
+//console.log("Loaded: ", event, rawFileContents.length);
+          //console.log(UTF8string);
+          var startPos = UTF8string.indexOf("END                                                                          ");
+          var startPos = UTF8string.indexOf("\x0d\x0a",startPos)+2;
+          var endPos = UTF8string.length;
+          var dataLength =  endPos - startPos + 1;
+          var XYZraw =  UTF8string.substr(startPos, dataLength).split(" ").join("");
+          var XYZlines = XYZraw.split("\x0d\x0a");
+          var XYZline = "";
+          var XYZfile = "";
+          pixelIdx = 0;
+console.log("    Adding data  for ", myName);
+          for (var lineIndex = 0; lineIndex < XYZlines.length; lineIndex++) {
+            var lineArray = XYZlines[lineIndex].split(",");              
+            if (lineArray.length > 3) {
+            textureX = parseFloat(lineArray[0].trim());
+            textureY = parseFloat(lineArray[1].trim());
+            xCoord = parseFloat(lineArray[2].trim());
+            yCoord = parseFloat(lineArray[3].trim());
+            zCoord = parseFloat(lineArray[4].trim());
+            if ((xCoord !== 0) && (yCoord !==0 ) && (zCoord !== 0)) {
+              XYZline  =  xCoord + "  " + yCoord + "  " + zCoord + " " + 
+                          RGBimage[pixelIdx] + " " + RGBimage[pixelIdx+1] + " " + RGBimage[pixelIdx+2] + "\n";
+              XYZfile += XYZline;
+            }
+            writeCanvas(textureX,textureY,  RGBimage[pixelIdx],  RGBimage[pixelIdx+1], RGBimage[pixelIdx+2]);
+            document.getElementById("status").innerHTML = processedPPM;
+            pixelIdx += 3;                        
+            }
+          }
+console.log("    Done.");
+          bigFile += XYZfile;
+          console.log("TOT:", bigFile.length);
+          //XYZfiles.push(XYZfile);
+          //XYZfilenames.push(myName);
+          document.getElementById("file_status").innerHTML = "Loaded";
+          document.getElementById("file_length").innerHTML = fileContentsUInt8.length + " bytes";
+
+
+      });
+      reader.readAsArrayBuffer(fileHandler); 
+}
+
+
+function loadVST(fileHandlers) {
+   XYZfiles = [];
+   XYZfilenames = [];
+   bigFile = "";
+   PPMhandlers = [];
+   TABhandlers = [];
+   PPMcount=0;
+   tabCount = 0;
+   for (var fileIndex = 0; fileIndex < fileHandlers.length;  fileIndex++) {
+      var fileHandler = fileHandlers[fileIndex];
+      var myName = fileHandlers[fileIndex].name;
+      if (myName.toUpperCase().indexOf("PPM")>=0) {
+         PPMcount++;
+         PPMhandlers.push(fileHandler);
+      }
+      if (myName.toUpperCase().indexOf("TAB")>=0) {
+         tabCount++;
+         TABhandlers.push(fileHandler);
+      }
+  }
+
+   console.log(PPMcount , " PPM files to process.");
+   console.log(tabCount , " TAB files to process.");
+   
+   for (var fileIndex = 0; fileIndex < fileHandlers.length;  fileIndex++) {
+      var fileHandler = fileHandlers[fileIndex];
+      var myName = fileHandlers[fileIndex].name;
+console.log("Processing file:", myName);
+      RGBimages = [];
+      if (myName.toUpperCase().indexOf("PPM")>=0) {      
+         fileHandlerPPM = fileHandler;
+         PPMfilename_part1 = myName.substr(0,11);
+         PPMfilename_part2 = myName.substr(17,10);
+         TABfilename =  PPMfilename_part1 + "l_" + PPMfilename_part2 + "_3D.tab";       
+console.log("Looking for .tab file ", TABfilename);
+         tabFound = false
+         for (handlerIndex = 0; ((handlerIndex < TABhandlers.length) && (tabFound == false)); handlerIndex++) {
+            var filename =  TABhandlers[handlerIndex].name;        
+            if (filename == TABfilename) {
+               fileHandlerTAB = TABhandlers[handlerIndex];
+               processPPM(fileHandlerPPM,myName,fileHandlerTAB); 
+               tabFound = true;
+            } else {
+              // skip
+            }
+         }
+        if (!tabFound) {
+         console.log(" ");
+         console.log(">>>>>>>>>>>>>No TAB file found for PPM file " + myName);
+         console.log(" ");
+      }
+      }
+  }
+
+console.log(processedPPM , " PPM files processed.");
+  
+  
+
+
+}
+
+
+function savePLY() {
+  for (lodIndex=0; lodIndex < LODS_TO_PROCESS; lodIndex++) {
+    saveFile(PLYfiles[lodIndex], "LOD"+lodIndex + ".ply","file_status");
+  }
+}
+
+
+function saveXYZ() {
+  //for (i=0; i < XYZfiles.length; i++) {
+    //saveFile(XYZfiles[i], XYZfilenames[i] + ".txt","file_status");
+    saveFile(bigFile, "mpf.txt","file_status");
+  // }
+}
+
+
+
+  function writeCanvas(x,y,r,g,b) {
+  ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+  ctx.fillRect(x,y,x+1,y+1);
+  }
+
+
+
+</script>
+
+  </body>
+</html>
