@@ -58,11 +58,11 @@ matching algorithm did not yield a good solution at that location.
 
 # Naming convention
 
-##Type 1:
+## Type 1:
 
 - i: data type = image, billboard, terrain
 - TTTTTTTTT timestamp (time of capture in seconds) (9 characetrs)
-- l: Left image
+- l: L = Left image, R = right, P = ???
 - .img: data type: image
 - _: separator
 - SSSS: sequence number (4 characters)
@@ -75,29 +75,30 @@ Examples:
 - billboards (.wrl): b1246925872p.img_0070065390.wrl.bz2.gz	
 
 ## Type 2 (adapted to DOS 8+3 format):
-- texture: **i**9#####X.jpg (X= A, C, E or T)
+- texture: **i**9TTTTTX.jpg (X= A, C, E or T)
     - i = image file
     - 9 = constant
-    - #### = timestamp
+    - TTTTT = last 5 characters of timestamp
     - T = filter #5
     - C = color
     - E = Enhanced color
     - A = altitude by color
-- 3d terrain: **t**9#####X.wrl
+- 3d terrain: **t**9TTTTTX.wrl
     - i = terrain 3d file
     - 9 = constant
-    - #### = timestamp
+    - TTTTT = last 5 characters of timestamp
     - X:
-      - A = 1000000 polygons
-      - B = 485000
-      - C = 97000
-      - D = 48500
-- billboards: **b**9#####X.wrl
+        - A = 10000 polygons per file, 1000000 polygons for whole scene
+        - B = 5000 polygons per file, 485000 polygons for whole scene
+        - C = 1000 polygons per file, 97000 polygons for whole scene
+        - D = 500 polygons per file, 48500 polygons for whole scene
+    - There are 388 terrain files, one per stereo image pair in four	resolutions
+- billboards: **b**9TTTTTX.wrl
     - b = billboard 3d  file
     - 9 = constant
-    - #### = timestamp
+    - TTTTT = last 5 characters of timestamp
     - X:
-      - 
+      - Number of polygons per file, always 2 for billboards
 
 # Textures
 Original textures created by SGI were saved in RGB format (created by SGI itself), available [here](https://vislab-ccom.unh.edu/~schwehr/photoRealVR/vrml1_files/rgb_texture.tar.bz2.gz) (13 MB); [JPG versions are available online](https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/extras/), but this script needs PPM format.
