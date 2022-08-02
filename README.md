@@ -73,3 +73,4 @@ matching algorithm did not yield a good solution at that location.
 -  [Images taken by rover, on pdsimage2.wr.usgs.gov](https://pdsimage2.wr.usgs.gov/Missions/Mars_Pathfinder/mprv_0001/browse/)
 -  [Images taken by rover, on NASA PDS atlas](https://pds-imaging.jpl.nasa.gov/search/?fq=ATLAS_MISSION_NAME%3A%22mars%20pathfinder%22&fq=ATLAS_SPACECRAFT_NAME%3Asojourner&fq=ATLAS_INSTRUMENT_NAME%3Arvr&fq=-ATLAS_THUMBNAIL_URL%3Abrwsnotavail.jpg&q=*%3A*&start=24)
 -  https://mars.nasa.gov/MPF/index1.html
+-  [Digitec mirror of NASA site (anyway broken links to sgi.com vrml models](https://mpf.digitec.net/)
