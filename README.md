@@ -1,4 +1,4 @@
-# mars-pathfinder-meshes
+# Mars Pathfinder 3d meshes
 Recovering and building 3d meshes from ancient Mars Pathfinder and Sojourner 3d data
 
 # Data format
@@ -73,5 +73,6 @@ matching algorithm did not yield a good solution at that location.
 -  [Images taken by rover, on pdsimage2.wr.usgs.gov](https://pdsimage2.wr.usgs.gov/Missions/Mars_Pathfinder/mprv_0001/browse/)
 -  [Images taken by rover, on NASA PDS atlas](https://pds-imaging.jpl.nasa.gov/search/?fq=ATLAS_MISSION_NAME%3A%22mars%20pathfinder%22&fq=ATLAS_SPACECRAFT_NAME%3Asojourner&fq=ATLAS_INSTRUMENT_NAME%3Arvr&fq=-ATLAS_THUMBNAIL_URL%3Abrwsnotavail.jpg&q=*%3A*&start=24)
 -  [Images taken by rover, grouped by sol; table with thumbnails](https://mars.nasa.gov/MPF/roverview/table.html)
+-  [Clickable map with rover images](https://mars.nasa.gov/MPF/roversci/site-map-Image.html)
 -  https://mars.nasa.gov/MPF/index1.html
 -  [Digitec mirror of NASA site (anyway broken links to sgi.com vrml models](https://mpf.digitec.net/)
