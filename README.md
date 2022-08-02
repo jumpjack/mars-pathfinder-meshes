@@ -57,7 +57,7 @@ matching algorithm did not yield a good solution at that location.
 [more...](https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/catalog/dataset.cat)
 
 # Textures
-Original textures created by SGI were saved in RGB format (created by SGI itself), not available today online; [JPG versions are available online](https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/extras/), but this script needs PPM format.
+Original textures created by SGI were saved in RGB format (created by SGI itself), available [here](https://vislab-ccom.unh.edu/~schwehr/photoRealVR/vrml1_files/rgb_texture.tar.bz2.gz) (13 MB); [JPG versions are available online](https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/extras/), but this script needs PPM format.
 
 How to convert texture to uncompressed PPM using IrfanView:
 
@@ -66,7 +66,9 @@ How to convert texture to uncompressed PPM using IrfanView:
 
 
 # Resources
-- [My collection of data and links on MPF mission](http://win98.altervista.org/pathfinder/)
+-  [My collection of data and links on MPF mission](http://win98.altervista.org/pathfinder/)
+-  [SGI data mirror](https://vislab-ccom.unh.edu/~schwehr/photoRealVR/vrml1_files/)
+-  [Old NASA repository (in weba archive) of WRL files](http://img.arc.nasa.gov/~zbinden/Pathfinder/)
 -  [July 4th, 1997: Successful landing announce](https://mars.nasa.gov/MPF/newspio/mpf/status/pf9707042.html)
 -  [Mars Pathfinder ASI/MET Archive CD-ROM at atmos.nmsu.edu](https://atmos.nmsu.edu/PDS/data/mpam_0001/aareadme.htm)
 -  [Original NASA page with VRML models (broken links to SGI.com)](https://mars.nasa.gov/MPF/vrml/pathvrml.html)
