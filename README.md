@@ -57,7 +57,7 @@ matching algorithm did not yield a good solution at that location.
 [more...](https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/catalog/dataset.cat)
 
 # Textures
-Original textures created by SGI were saved in RGB format (created by SGI itself), not available today online; [JPG versions are available online(https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/extras/), but this script needs PPM format.
+Original textures created by SGI were saved in RGB format (created by SGI itself), not available today online; [JPG versions are available online](https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/extras/), but this script needs PPM format.
 
 How to convert texture to uncompressed PPM using IrfanView:
 
