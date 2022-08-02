@@ -59,14 +59,16 @@ matching algorithm did not yield a good solution at that location.
 # Naming convention
 
 ## Type 1:
-
-- i: data type = image, billboard, terrain
-- TTTTTTTTT timestamp (time of capture in seconds) (9 characetrs)
-- l: L = Left image, R = right, P = ???
-- .img: data type: image
-- _: separator
-- SSSS: sequence number (4 characters)
-- IIIIII: image number in sequence (6 character)
+- texture: iTTTTTTTTTl.img_SSSSIIIIII0T
+  - i: data type = image (b=billboard, t=terrain)
+  - TTTTTTTTT timestamp (time of capture in seconds) (9 characetrs)
+  - l: L = Left image, R = right, P = ???
+  - .img: data type: image
+  - _: separator
+  - SSSS: sequence number (4 characters)
+  - IIIIII: image number in sequence (6 character)
+  - 0: ???
+  - T: texture (\_3D = 3d WRL file)
 
 Examples:
 
@@ -79,10 +81,10 @@ Examples:
     - i = image file
     - 9 = constant
     - TTTTT = last 5 characters of timestamp
-    - T = filter #5
-    - C = color
-    - E = Enhanced color
-    - A = altitude by color
+    - T = grayscale based on filter #5
+    - C = color, retouched, not suitable for photogrammetry
+    - E = Enhanced color (artistic)
+    - A = altitude by color overlayed to b/w texture
 - 3d terrain: **t**9TTTTTX.wrl
     - i = terrain 3d file
     - 9 = constant
@@ -98,7 +100,7 @@ Examples:
     - 9 = constant
     - TTTTT = last 5 characters of timestamp
     - X:
-      - Number of polygons per file, always 2 for billboards
+      - Number of polygons per file, always "Z" for billboards (=2 polygons)
 
 # Textures
 Original textures created by SGI were saved in RGB format (created by SGI itself), available [here](https://vislab-ccom.unh.edu/~schwehr/photoRealVR/vrml1_files/rgb_texture.tar.bz2.gz) (13 MB); [JPG versions are available online](https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/extras/), but this script needs PPM format.
