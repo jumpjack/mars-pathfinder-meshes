@@ -62,10 +62,10 @@ matching algorithm did not yield a good solution at that location.
 -  [Mars Pathfinder ASI/MET Archive CD-ROM at atmos.nmsu.edu](https://atmos.nmsu.edu/PDS/data/mpam_0001/aareadme.htm)
 -  [Original NASA page with VRML models (broken links to SGI.com)](https://mars.nasa.gov/MPF/vrml/pathvrml.html)
 -  [Folders list at pdsimage2.wr.usgs.gov](https://pdsimage2.wr.usgs.gov/Missions/Mars_Pathfinder/):
-    -  mpim_0001/                                         09-Jan-2009 17:41                   -
-    -  mpim_0002/                                         09-Jan-2009 19:12                   -
-    -  mpim_0003/                                         09-Jan-2009 19:19                   -
-    -  mprv_0001/                                         02-Feb-2009 23:31                   -
+    -  mpim_0001/ - 09-Jan-2009 17:41 - SCLK: 1229455934 - 1247913223
+    -  mpim_0002/ - 09-Jan-2009 19:12 - SCLK: 1247913268 - 1249772261
+    -  mpim_0003/ - 09-Jan-2009 19:19 - SCLK: 1249772268 - 1254046834
+    -  mprv_0001/ - 02-Feb-2009 23:31 
 -  [Mars Pathfinder radioscience at pds-geosciences.wustl.edu](https://pds-geosciences.wustl.edu/missions/mpf/radioscience.html)
 -  Raw 3d data in .TAB format:
     -  [Folder](https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/)
