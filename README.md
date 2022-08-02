@@ -44,8 +44,7 @@ are **somewhat better than for the Monster Pan due to the increased
 image overlap and lower image compression**.
 
 
-Data Coverage and Quality
-=========================
+## Data Coverage and Quality
 
 As discussed above, the 3-D position information is deduced matching
 brightness patterns in the left and right eyes of the stereo pair.
@@ -55,6 +54,7 @@ value of zero is assigned to the Cartesian coordinate (X=Y=Z=0) in
 the table**. Thus, zero values in the table indicate that the stereo
 matching algorithm did not yield a good solution at that location.
 
+[more...](https://pds-geosciences.wustl.edu/mpf/mpfl-m-imp-5-3dposition-v1/mpim_2xxx/catalog/dataset.cat)
 
 # Resources
 -  [July 4th, 1997: Successful landing announce](https://mars.nasa.gov/MPF/newspio/mpf/status/pf9707042.html)
