@@ -113,7 +113,7 @@ How to convert texture to uncompressed PPM using IrfanView:
 
 # Resources
 -  [My collection of data and links on MPF mission](http://win98.altervista.org/pathfinder/)
--  [zbinden mirror for WRL and textures](http://img.arc.nasa.gov/~zbinden/Pathfinder/)
+-  [zbinden mirror for WRL and textures](http://img.arc.nasa.gov/~zbinden/Pathfinder/) (broken)
 -  [schwehr mirror for WRL and textures](https://vislab-ccom.unh.edu/~schwehr/photoRealVR/)
 -  [July 4th, 1997: Successful landing announce](https://mars.nasa.gov/MPF/newspio/mpf/status/pf9707042.html)
 -  [Mars Pathfinder ASI/MET Archive CD-ROM at atmos.nmsu.edu](https://atmos.nmsu.edu/PDS/data/mpam_0001/aareadme.htm)
