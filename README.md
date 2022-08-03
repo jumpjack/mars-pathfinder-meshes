@@ -109,6 +109,17 @@ How to convert texture to uncompressed PPM using IrfanView:
 
 ![image](https://user-images.githubusercontent.com/1620953/182336442-a7e36d37-d45d-452e-a1c9-4cb0d5c2c81d.png)
 
+# Digital elevation model of landing site
+![image](https://user-images.githubusercontent.com/1620953/182622211-4aee3e89-98be-47ba-8e87-63b3ed38ace3.png)
+
+- (Grayscale heightmap from hirise images](https://www.planetary.org/articles/2333)
+- Source hirise images: [PSP_001890_1995](https://hirise.lpl.arizona.edu/PSP_001890_1995) and [PSP_002391_1995](https://hirise.lpl.arizona.edu/PSP_002391_1995)
+- [Annotated Hirise image](https://static.uahirise.org/images/2007/details/cut/closeup_labels.jpg)
+- [Closeup of annotated image](https://static.uahirise.org/images/2007/details/cut/MPF_parts_2.jpg)
+
+Extracting two images of same size from above resources, one for visible image and one for depthmap, it should be possible viewing the 3d model in inerative way in these pages:
+- https://depthmapviewer.ugocapeto.com/
+- https://github.com/kmgill/depthviewer ([live](https://win98.altervista.org/space/exploration/depthviewer-master))
 
 
 # Resources
