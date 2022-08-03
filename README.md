@@ -114,7 +114,7 @@ How to convert texture to uncompressed PPM using IrfanView:
 
 - [Grayscale heightmap from hirise images](https://www.planetary.org/articles/2333)
 - Source hirise images: 
-    - [PSP_001890_1995](https://hirise.lpl.arizona.edu/PSP_001890_1995) ([online viewer](http://viewer.mars.asu.edu/viewer/hirise#P=PSP_001890_1990_COLOR&T=2))
+    - [PSP_001890_1995](https://hirise.lpl.arizona.edu/PSP_001890_1995) ([online viewer](http://viewer.mars.asu.edu/viewer/hirise#P=PSP_001890_1995_COLOR&T=2))
     - [PSP_002391_1995](https://hirise.lpl.arizona.edu/PSP_002391_1995) ([online viewer](http://viewer.mars.asu.edu/viewer/hirise#P=PSP_002391_1995_COLOR&T=2))
 - [Annotated Hirise image](https://static.uahirise.org/images/2007/details/cut/closeup_labels.jpg)
 - [Closeup of annotated image](https://static.uahirise.org/images/2007/details/cut/MPF_parts_2.jpg)
