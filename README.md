@@ -115,9 +115,7 @@ How to convert texture to uncompressed PPM using IrfanView:
 - [Grayscale heightmap from hirise images](https://www.planetary.org/articles/2333)
 - Source hirise images: 
     - [ESP_022038_1995](https://hirise.lpl.arizona.edu/ESP_022038_1995) ([online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/ESP_022038_1995_RED#P=ESP_022038_1995_RED&T=2))
-    - [ESP_002391_1995](https://hirise.lpl.arizona.edu/ESP_002391_1995) ([online viewer]([http://viewer.mars.asu.edu/viewer/hirise#P=ESP_002391_1995_COLOR&T=](http://viewer.mars.asu.edu/planetview/inst/hirise/ESP_002391_1995_RED#P=ESP_002391_1995_RED&T=2)) 
-    - [PSP_002391_1995](https://hirise.lpl.arizona.edu/PSP_002391_1995) ([online viewer](http://viewer.mars.asu.edu/viewer/hirise#P=PSP_002391_1995_COLOR&T=2)) 
-    - [PSP_001890_1995](https://hirise.lpl.arizona.edu/PSP_001890_1995) ([online viewer](http://viewer.mars.asu.edu/viewer/hirise#P=PSP_001890_1995_COLOR&T=2)) (MPF not visible)
+    - [PSP_002391_1995](https://hirise.lpl.arizona.edu/PSP_002391_1995) ([online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/PSP_002391_1995_RED#P=PSP_002391_1995_RED&T=2)) 
 - [Annotated Hirise image](https://static.uahirise.org/images/2007/details/cut/closeup_labels.jpg)
 - [Closeup of annotated image](https://static.uahirise.org/images/2007/details/cut/MPF_parts_2.jpg)
 
