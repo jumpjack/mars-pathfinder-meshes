@@ -112,12 +112,13 @@ How to convert texture to uncompressed PPM using IrfanView:
 # Digital elevation model of landing site
 ![image](https://user-images.githubusercontent.com/1620953/182622211-4aee3e89-98be-47ba-8e87-63b3ed38ace3.png)
 
+- MPF landing site coordinates: 19.28°N and 326.5°E
 - [Grayscale heightmap from hirise images](https://www.planetary.org/articles/2333)
 - Source hirise images: 
     - [ESP_022038_1995](https://hirise.lpl.arizona.edu/ESP_022038_1995) ([online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/ESP_022038_1995_RED#P=ESP_022038_1995_RED&T=2))
     - [PSP_002391_1995](https://hirise.lpl.arizona.edu/PSP_002391_1995) ([online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/PSP_002391_1995_RED#P=PSP_002391_1995_RED&T=2)) 
 - [Annotated Hirise image](https://static.uahirise.org/images/2007/details/cut/closeup_labels.jpg)
-- Map of hirise images centered on MPF landing site: http://global-data.mars.asu.edu/bin/hirise.pl?res=32&clat=19.0879&clon=326.745&ids=PSP_002391_1995_COLOR&day_night=2&rel=0
+- Map of hirise images centered on MPF landing site: http://global-data.mars.asu.edu/bin/hirise.pl?res=32&clat=19.28&clon=326.5&ids=PSP_002391_1995_COLOR&day_night=2&rel=0
 - [Closeup of annotated image](https://static.uahirise.org/images/2007/details/cut/MPF_parts_2.jpg)
 
 Pathfinder location:
