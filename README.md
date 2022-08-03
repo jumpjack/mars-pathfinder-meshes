@@ -119,6 +119,10 @@ How to convert texture to uncompressed PPM using IrfanView:
 - [Annotated Hirise image](https://static.uahirise.org/images/2007/details/cut/closeup_labels.jpg)
 - [Closeup of annotated image](https://static.uahirise.org/images/2007/details/cut/MPF_parts_2.jpg)
 
+Pathfinder location:
+![image](https://user-images.githubusercontent.com/1620953/182626642-e79f8113-5dbc-4044-9489-a7cf22163a0f.png)
+
+
 Extracting two images of same size from above resources, one for visible image and one for depthmap, it should be possible viewing the 3d model in inerative way in these pages:
 - https://depthmapviewer.ugocapeto.com/
 - https://github.com/kmgill/depthviewer ([live](https://win98.altervista.org/space/exploration/depthviewer-master))
