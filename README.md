@@ -132,6 +132,17 @@ How to convert texture to uncompressed PPM using IrfanView:
           - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/ESP_022038_1995_RED#P=ESP_022038_1995_RED&T=2)
           - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/ESP/ORB_022000_022099/) (not available as of 2022/08/04)
           - DEM folder (raw data)
+   - Folders:
+          - **Browse (lo-res)**:
+          - https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/RDR/ESP/ORB_022000_022099/ESP_022038_1995/
+          - https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/EDR/PSP/ORB_001800_001899/PSP_001890_1995/
+          - https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/EDR/PSP/ORB_002300_002399/PSP_002391_1995/
+          - **Raw:**
+          - https://hirise-pds.lpl.arizona.edu/PDS/EDR/ESP/ORB_022000_022099/ESP_022038_1995/
+          - https://hirise-pds.lpl.arizona.edu/PDS/EDR/PSP/ORB_001800_001899/PSP_001890_1995/
+          - https://hirise-pds.lpl.arizona.edu/PDS/EDR/PSP/ORB_002300_002399/PSP_002391_1995/
+
+
 - [Grayscale heightmap from hirise images](https://www.planetary.org/articles/2333)
 - [Annotated Hirise image](https://static.uahirise.org/images/2007/details/cut/closeup_labels.jpg)
 - [Closeup of annotated image](https://static.uahirise.org/images/2007/details/cut/MPF_parts_2.jpg)
