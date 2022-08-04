@@ -112,6 +112,9 @@ How to convert texture to uncompressed PPM using IrfanView:
 # Digital elevation model of landing site
 ![image](https://user-images.githubusercontent.com/1620953/182622211-4aee3e89-98be-47ba-8e87-63b3ed38ace3.png)
 
+- Interactive map of available DEMs/DTMs: https://www.uahirise.org/hiwish/maps/dtms.jsp
+- Interactive map of visible Hirise images: http://global-data.mars.asu.edu/bin/hirise.pl?res=32&clat=-14.57&clon=175.47&ids=PSP_002391_1995_COLOR&day_night=2&rel=0
+
 - MPF landing site coordinates: 19.28°N and 326.5°E
 - [Grayscale heightmap from hirise images](https://www.planetary.org/articles/2333)
 - Source hirise images: 
