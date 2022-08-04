@@ -132,7 +132,7 @@ How to convert texture to uncompressed PPM using IrfanView:
       - [Raw/hires folder](https://hirise-pds.lpl.arizona.edu/PDS/EDR/PSP/ORB_002300_002399/PSP_002391_1995/)
       - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/PSP/ORB_002300_002399/)
       - [DEM folder (raw data)](https://hirise-pds.lpl.arizona.edu/PDS/DTM/PSP/ORB_002300_002399/)
-      - [Link for Hiview viewer](jpip://hirise-jpip.lpl.arizona.edu:8064/PDS/EXTRAS/RDR/PSP/ORB_002300_002399/PSP_002391_1995/PSP_002391_1995_RED.QLOOK.JP2)
+      - [Link for Hiview viewer](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/RDR/PSP/ORB_002300_002399/PSP_002391_1995/PSP_002391_1995_RED.QLOOK.JP2)
     - ESP_022038_1995: 
        - [Main page](https://hirise.lpl.arizona.edu/ESP_022038_1995)
        - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/ESP_022038_1995_RED#P=ESP_022038_1995_RED&T=2)
@@ -140,7 +140,7 @@ How to convert texture to uncompressed PPM using IrfanView:
        - [Raw/hires folder](https://hirise-pds.lpl.arizona.edu/PDS/EDR/ESP/ORB_022000_022099/ESP_022038_1995/)
        - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/ESP/ORB_022000_022099/) (not available as of 2022/08/04)
        - [DEM folder (raw data)](https://hirise-pds.lpl.arizona.edu/PDS/DTM/ESP/ORB_022000_022099/) (not available as of 2022/08/04)
-       - [Link for Hiview viewer](jpip://hirise-jpip.lpl.arizona.edu:8064/PDS/EXTRAS/RDR/ESP/ORB_022000_022099/ESP_022038_1995/ESP_022038_1995_RED.QLOOK.JP2)
+       - [Link for Hiview viewer](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/RDR/ESP/ORB_022000_022099/ESP_022038_1995/ESP_022038_1995_RED.QLOOK.JP2)
 
 
 - [Grayscale heightmap from hirise images](https://www.planetary.org/articles/2333)
