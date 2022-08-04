@@ -116,12 +116,24 @@ How to convert texture to uncompressed PPM using IrfanView:
 - Interactive map of visible Hirise images, centered on landing site (19.28°N and 326.5°E): http://global-data.mars.asu.edu/bin/hirise.pl?res=32&clat=19.28&clon=326.5&ids=PSP_002391_1995_COLOR&day_night=2&rel=0
 
 - MPF landing site coordinates: 19.28°N and 326.5°E
-- [Grayscale heightmap from hirise images](https://www.planetary.org/articles/2333)
 - Source hirise images: 
-    - [ESP_022038_1995](https://hirise.lpl.arizona.edu/ESP_022038_1995) ([online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/ESP_022038_1995_RED#P=ESP_022038_1995_RED&T=2))
-    - [PSP_002391_1995](https://hirise.lpl.arizona.edu/PSP_002391_1995) ([online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/PSP_002391_1995_RED#P=PSP_002391_1995_RED&T=2)) 
+    - PSP_001890_1995: 
+          - [Main page](https://hirise.lpl.arizona.edu/PSP_001890_1995)
+          - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/PSP_001890_1995_RED#P=PSP_001890_1995_RED&T=2)
+          - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/PSP/ORB_001800_001899/)
+          - DEM folder (raw data)
+    - PSP_002391_1995: 
+          - [Main page](https://hirise.lpl.arizona.edu/PSP_002391_1995)
+          - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/PSP_002391_1995_RED#P=PSP_002391_1995_RED&T=2)
+          - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/PSP/ORB_002300_002399/)
+          - DEM folder (raw data)
+    - ESP_022038_1995: 
+          - [Main page](https://hirise.lpl.arizona.edu/ESP_022038_1995)
+          - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/ESP_022038_1995_RED#P=ESP_022038_1995_RED&T=2)
+          - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/ESP/ORB_022000_022099/) (not available as of 2022/08/04)
+          - DEM folder (raw data)
+- [Grayscale heightmap from hirise images](https://www.planetary.org/articles/2333)
 - [Annotated Hirise image](https://static.uahirise.org/images/2007/details/cut/closeup_labels.jpg)
-- Map of hirise images centered on MPF landing site: http://global-data.mars.asu.edu/bin/hirise.pl?res=32&clat=19.28&clon=326.5&ids=PSP_002391_1995_COLOR&day_night=2&rel=0
 - [Closeup of annotated image](https://static.uahirise.org/images/2007/details/cut/MPF_parts_2.jpg)
 
 Pathfinder location:
