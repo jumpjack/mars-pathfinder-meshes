@@ -72,7 +72,7 @@ matching algorithm did not yield a good solution at that location.
 
 Examples:
 
-- Textures (rgb): i1246924501p.img_0070060390T.rgb.bz2.gz	: iTTTTTTTTTp.img_SSSSNNNNNNT.rgb
+- Textures (rgb): i1246924501p.img_0070060390T.rgb.bz2.gz	: iTTTTTTTTTp.img_SSSSIIIIIIT.rgb
 - 3d terrain (.wrl): t1246924501p.img_0070060390_3.wrl.bz2
 - billboards (.wrl): b1246925872p.img_0070065390.wrl.bz2.gz	
 
