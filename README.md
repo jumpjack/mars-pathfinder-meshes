@@ -116,7 +116,7 @@ How to convert texture to uncompressed PPM using IrfanView:
 - Interactive map of visible Hirise images, centered on landing site (19.28°N and 326.5°E): http://global-data.mars.asu.edu/bin/hirise.pl?res=32&clat=19.28&clon=326.5&ids=PSP_002391_1995_COLOR&day_night=2&rel=0
 
 - MPF landing site coordinates: 19.28°N and 326.5°E
-- Source hirise images: 
+- Source hirise images (see also [HiVew viewer](https://pirlwww.lpl.arizona.edu/software/HiView/Users_Guide/Introduction/Description-Quick_Start_.html)): 
    - PSP_001890_1995: 
       - [Main page](https://hirise.lpl.arizona.edu/PSP_001890_1995)
       - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/PSP_001890_1995_RED#P=PSP_001890_1995_RED&T=2)
