@@ -153,3 +153,40 @@ Extracting two images of same size from above resources, one for visible image a
 -  [Clickable map with rover images](https://mars.nasa.gov/MPF/roversci/site-map-Image.html)
 -  https://mars.nasa.gov/MPF/index1.html
 -  [Digitec mirror of NASA site (anyway broken links to sgi.com vrml models](https://mpf.digitec.net/)
+
+# Interesting papers by USGS
+
+- (0) **[USGS MAPPING OF THE MARS PATHFINDER LANDING SITE: PROGRESS AND PLANS](https://astropedia.astrogeology.usgs.gov/download/Research/ISPRS/6216.pdf)**
+    -  Kirk, R. L., et al.
+- (1) **The Imager for Mars Pathfinder Experiment**
+    - JGR—Planets, 102, 4003–4025 
+    - Smith, P., et al.
+    - 1997
+- (2) **Results from the Mars Pathfinder Camera**
+    - Science, 278, 1758–1765
+    - Smith, P., et al.
+    - 1997
+- (3) **USGS Experiences Mapping the Mars Pathfinder Landing Site**
+    - ISPRS Working Group IV/5 workshop “Mapping of Mars”, University College London, 16-17 April 1999
+    - Kirk, R. L., et al.
+    - 1998
+    - abstract online at http://www/ps.ucl.ac.uk/isprs-etm/abstracts/kirk.html;
+- (3a) **Mapping the Sagan Memorial Station Site with the Imager for Mars Pathfinder Camera**
+    - In Lunar Planet Sci. XXIX, abstract #1752 (CD-ROM)    
+    - Kirk, R. L., et al.
+    - 1998
+- (3b) **The Mars Pathfinder “Super Pan”: A U.S.G.S. Cartographic Product**
+    - In Lunar Planet. Sci. XXIX, abstract #1831 (CD-ROM)
+    - Gaddis, L., et al., 1998
+- (4) **Digital Mapping of the Mars Pathfinder Landing Site: Design, Acquisition, and Compilation of a Cartographic Product for Science Applications**
+    - J. Geophys Res., 104 (E4), 8853–8868
+    - Gaddis, L., et al.
+    - 1999
+- (5) **Digital Photogrammetric Analysis of the IMP Camera Images: Mapping the Pathfinder Landing Site in Three Dimensions**
+    - J. Geophys. Res., 104 (E4), 8869–8888
+    - Kirk, R. L., et al.
+    - 1999 
+- (6) **“Super Resolution” of the Mars Pathfinder Landing Site by Manual Techniques**
+    - In Lunar Planet. Sci. XXIX, abstract #1965 (CD-ROM)
+    - Parker, T. J.
+    - 1998
