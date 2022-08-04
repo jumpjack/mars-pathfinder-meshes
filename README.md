@@ -191,8 +191,12 @@ Extracting two images of same size from above resources, one for visible image a
     - Parker, T. J.
     - 1998
 
-MPF USGS papers list: https://astrogeology.usgs.gov/search/results?k1=mission&v1=Mars+Pathfinder
+Others:
 
 - [HIGH PRECISION LANDING SITE MAPPING AND ROVER LOCALIZATION BY INTEGRATED BUNDLE ADJUSTMENT OF MPF SURFACE IMAGES](https://astropedia.astrogeology.usgs.gov/download/Research/ISPRS/Di.pdf)
-    -  Kaichang Di (di.2 AT osu.edu) , Fengliang Xu (xu.101 AT @osu.edu) , Ron Li (li.282 AT osu.edu), Larry H. Matthies ( - lhm AT telerobotics.jpl.nasa.gov ), Clark F. Olson (cfolson AT u.washington.edu )
-    
+    -  Kaichang Di (di.2 AT osu.edu) , Fengliang Xu (xu.101 AT @osu.edu) , Ron Li (li.282 AT osu.edu), Larry H. Matthies ( - lhm AT telerobotics.jpl.nasa.gov ), Clark F. Olson (cfolson AT u.washington.edu )    
+- [AN IMAGE MAP OF THE MARS PATHFINDER LANDING SITE](https://astropedia.astrogeology.usgs.gov/download/Research/ISPRS/6109.pdf)
+    - M. Kuschel, J. Oberst (Juergen.Oberst AT dlr.de)
+
+
+MPF USGS papers list: https://astrogeology.usgs.gov/search/results?k1=mission&v1=Mars+Pathfinder
