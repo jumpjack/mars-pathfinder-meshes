@@ -157,7 +157,7 @@ Extracting two images of same size from above resources, one for visible image a
 # Interesting papers by USGS
 
 - (0) **[USGS MAPPING OF THE MARS PATHFINDER LANDING SITE: PROGRESS AND PLANS](https://astropedia.astrogeology.usgs.gov/download/Research/ISPRS/6216.pdf)**
-    -  Kirk, R. L., et al.
+    -  Randolph L. Kirk (rkirk AT flagmail.wr.usgs.gov)
 - (1) **The Imager for Mars Pathfinder Experiment**
     - JGR—Planets, 102, 4003–4025 
     - Smith, P., et al.
@@ -166,7 +166,7 @@ Extracting two images of same size from above resources, one for visible image a
     - Science, 278, 1758–1765
     - Smith, P., et al.
     - 1997
-- (3) **USGS Experiences Mapping the Mars Pathfinder Landing Site**
+- (3) **[USGS Experiences Mapping the Mars Pathfinder Landing Site](https://astropedia.astrogeology.usgs.gov/download/Research/ISPRS/kirk_1998.pdf)**
     - ISPRS Working Group IV/5 workshop “Mapping of Mars”, University College London, 16-17 April 1999
     - Kirk, R. L., et al.
     - 1998
@@ -190,6 +190,8 @@ Extracting two images of same size from above resources, one for visible image a
     - In Lunar Planet. Sci. XXIX, abstract #1965 (CD-ROM)
     - Parker, T. J.
     - 1998
+
+MPF USGS papers list: https://astrogeology.usgs.gov/search/results?k1=mission&v1=Mars+Pathfinder
 
 - [HIGH PRECISION LANDING SITE MAPPING AND ROVER LOCALIZATION BY INTEGRATED BUNDLE ADJUSTMENT OF MPF SURFACE IMAGES](https://astropedia.astrogeology.usgs.gov/download/Research/ISPRS/Di.pdf)
     -  Kaichang Di (di.2 AT osu.edu) , Fengliang Xu (xu.101 AT @osu.edu) , Ron Li (li.282 AT osu.edu), Larry H. Matthies ( - lhm AT telerobotics.jpl.nasa.gov ), Clark F. Olson (cfolson AT u.washington.edu )
