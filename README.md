@@ -117,27 +117,27 @@ How to convert texture to uncompressed PPM using IrfanView:
 
 - MPF landing site coordinates: 19.28°N and 326.5°E
 - Source hirise images: 
-    - PSP_001890_1995: 
-          - [Main page](https://hirise.lpl.arizona.edu/PSP_001890_1995)
-          - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/PSP_001890_1995_RED#P=PSP_001890_1995_RED&T=2)
-          - [Lo-res folder](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/EDR/PSP/ORB_001800_001899/PSP_001890_1995/)
-          - [Raw/hires folder](https://hirise-pds.lpl.arizona.edu/PDS/EDR/PSP/ORB_001800_001899/PSP_001890_1995/)
-          - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/PSP/ORB_001800_001899/)
-          - DEM folder (raw data)
+   - PSP_001890_1995: 
+      - [Main page](https://hirise.lpl.arizona.edu/PSP_001890_1995)
+      - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/PSP_001890_1995_RED#P=PSP_001890_1995_RED&T=2)
+      - [Lo-res folder](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/EDR/PSP/ORB_001800_001899/PSP_001890_1995/)
+      - [Raw/hires folder](https://hirise-pds.lpl.arizona.edu/PDS/EDR/PSP/ORB_001800_001899/PSP_001890_1995/)
+      - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/PSP/ORB_001800_001899/) (no DEM available as of 2022/08/04)
+      - [DEM folder (raw data)](https://hirise-pds.lpl.arizona.edu/PDS/DTM/PSP/ORB_001800_001899/) (no DEM available as of 2022/08/04)
     - PSP_002391_1995: 
-          - [Main page](https://hirise.lpl.arizona.edu/PSP_002391_1995)
-          - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/PSP_002391_1995_RED#P=PSP_002391_1995_RED&T=2)
-          - [Lo-res folder](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/EDR/PSP/ORB_002300_002399/PSP_002391_1995/)
-          - [Raw/hires folder](https://hirise-pds.lpl.arizona.edu/PDS/EDR/PSP/ORB_002300_002399/PSP_002391_1995/)
-          - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/PSP/ORB_002300_002399/)
-          - DEM folder (raw data)
+      - [Main page](https://hirise.lpl.arizona.edu/PSP_002391_1995)
+      - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/PSP_002391_1995_RED#P=PSP_002391_1995_RED&T=2)
+      - [Lo-res folder](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/EDR/PSP/ORB_002300_002399/PSP_002391_1995/)
+      - [Raw/hires folder](https://hirise-pds.lpl.arizona.edu/PDS/EDR/PSP/ORB_002300_002399/PSP_002391_1995/)
+      - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/PSP/ORB_002300_002399/)
+      - [DEM folder (raw data)](https://hirise-pds.lpl.arizona.edu/PDS/DTM/PSP/ORB_002300_002399/)
     - ESP_022038_1995: 
-          - [Main page](https://hirise.lpl.arizona.edu/ESP_022038_1995)
-          - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/ESP_022038_1995_RED#P=ESP_022038_1995_RED&T=2)
-          - [Lo-res folder](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/RDR/ESP/ORB_022000_022099/ESP_022038_1995/)
-          - [Raw/hires folder](https://hirise-pds.lpl.arizona.edu/PDS/EDR/ESP/ORB_022000_022099/ESP_022038_1995/)
-          - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/ESP/ORB_022000_022099/) (not available as of 2022/08/04)
-          - DEM folder (raw data)
+       - [Main page](https://hirise.lpl.arizona.edu/ESP_022038_1995)
+       - [Online viewer](http://viewer.mars.asu.edu/planetview/inst/hirise/ESP_022038_1995_RED#P=ESP_022038_1995_RED&T=2)
+       - [Lo-res folder](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/RDR/ESP/ORB_022000_022099/ESP_022038_1995/)
+       - [Raw/hires folder](https://hirise-pds.lpl.arizona.edu/PDS/EDR/ESP/ORB_022000_022099/ESP_022038_1995/)
+       - [DEM folder (browse version)](https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/ESP/ORB_022000_022099/) (not available as of 2022/08/04)
+       - [DEM folder (raw data)](https://hirise-pds.lpl.arizona.edu/PDS/DTM/ESP/ORB_022000_022099/) (not available as of 2022/08/04)
 
 
 - [Grayscale heightmap from hirise images](https://www.planetary.org/articles/2333)
