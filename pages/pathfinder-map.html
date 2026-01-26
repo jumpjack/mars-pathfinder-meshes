@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathfinder Rock Map - Modernized</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #eee;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 { color: #ff6600; margin-bottom: 5px; }
+        .description { color: #888; margin-bottom: 20px; }
+
+        /* Contenitore Immagine */
+        .map-wrapper {
+            position: relative;
+            display: inline-block;
+            background: #000;
+            line-height: 0;
+            border: 1px solid #444;
+        }
+
+        .map-wrapper img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Overlay per disegnare i cerchi visibili */
+        #map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Stile delle aree circolari */
+        .rock-area {
+            fill: rgba(255, 102, 0, 0.2); /* Arancione trasparente */
+            stroke: rgba(255, 102, 0, 0.7);
+            stroke-width: 1.5;
+            transition: all 0.2s;
+            cursor: crosshair;
+        }
+
+        .rock-area:hover {
+            fill: rgba(255, 255, 255, 0.3);
+            stroke: #fff;
+            stroke-width: 3;
+        }
+
+        /* Tooltip (il nome che appare) */
+        #tooltip {
+            position: fixed;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.9);
+            color: #ff6600;
+            border: 1px solid #ff6600;
+            border-radius: 4px;
+            font-weight: bold;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+            transform: translate(-50%, -130%);
+            white-space: nowrap;
+        }
+
+        .quote {
+            margin-top: 30px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pathfinder Rock Map</h1>
+    <div class="description">Passa il mouse sulle zone evidenziate per leggere i nomi</div>
+
+    <div class="map-wrapper">
+        <!-- Immagine originale -->
+        <img id="mars-img" src="blank-site-map.jpg" alt="Mars Rocks">
+
+        <!-- SVG per le aree visibili -->
+        <svg id="map-overlay"></svg>
+    </div>
+
+    <div id="tooltip"></div>
+
+    <div class="quote">
+        "But I know every boulder, stone and pebble<br>
+        Has a volume, has a surface, has a name."
+    </div>
+
+    <script>
+        // Database delle rocce (estratto dai tuoi dati originali e pulito)
+        const rockData = [
+            {n: "Hardstop", c: "470,183,5"}, {n: "Cabbage Patch", c: "465,236,11"},
+            {n: "Hedgehog", c: "484,123,7"}, {n: "Stack", c: "522,35,9"},
+            {n: "Casper", c: "500,204,6"}, {n: "Boo", c: "515,190,2"},
+            {n: "Shaggy", c: "528,173,14"}, {n: "Scooby Doo", c: "511,260,6"},
+            {n: "Baker's Bunch", c: "680,61,23"}, {n: "Desert Princess", c: "666,146,8"},
+            {n: "Calvin", c: "608,328,9"}, {n: "Marvin", c: "655,302,6"},
+            {n: "Snowy", c: "655,324,12"}, {n: "Rye Bread", c: "1024,129,20"},
+            {n: "Mint Julep", c: "591,371,11"}, {n: "Hobbes", c: "626,372,8"},
+            {n: "Spud", c: "846,564,6"}, {n: "Matterhorn", c: "600,501,19"},
+            {n: "Piglet", c: "781,643,8"}, {n: "Poohbear", c: "756,648,7"},
+            {n: "Pyramid", c: "561,583,5"}, {n: "Bosco", c: "597,757,8"},
+            {n: "Squid", c: "481,671,12"}, {n: "Hassock", c: "471,689,12"},
+            {n: "Snoopy", c: "304,892,17"}, {n: "Wedge", c: "362,687,17"},
+            {n: "Rindstone", c: "287,1047,40"}, {n: "Shark", c: "252,799,22"},
+            {n: "Ren", c: "296,705,12"}, {n: "Half Dome", c: "203,777,27"},
+            {n: "Flute Top", c: "316,600,8"}, {n: "Flat Top", c: "283,634,15"},
+            {n: "Stimpy", c: "225,665,19"}, {n: "Frog", c: "179,663,12"},
+            {n: "Pumpkin", c: "159,730,33"}, {n: "Bam Bam", c: "340,568,8"},
+            {n: "Mouse", c: "298,560,9"}, {n: "Little Flat Top", c: "235,617,12"},
+            {n: "Lunch Box", c: "227,540,8"}, {n: "Woody", c: "127,608,14"},
+            {n: "Garrak", c: "280,465,8"}, {n: "Stripe", c: "190,472,6"},
+            {n: "Pinnochio", c: "-20,497,15"}, {n: "Jiminy Cricket", c: "59,485,11"},
+            {n: "Ratbert", c: "-37,414,4"}, {n: "Ant Hill", c: "164,395,6"},
+            {n: "Pyramid Point", c: "-356,398,24"}, {n: "Duck", c: "68,361,9"},
+            {n: "Pinkie", c: "299,398,3"}, {n: "Dilbert's Boss", c: "239,380,7"},
+            {n: "Photometry Flats", c: "198,344,0"}, {n: "Barnacle Bill", c: "295,369,13"},
+            {n: "Valentine", c: "-86,46,60"}, {n: "Cradle", c: "154,251,13"},
+            {n: "Jazzy", c: "147,229,10"}, {n: "Souffle", c: "224,267,10"},
+            {n: "Left Die", c: "210,231,6"}, {n: "Mid Die", c: "205,213,6"},
+            {n: "Right Die", c: "220,210,5"}, {n: "Platypus", c: "100,117,11"},
+            {n: "Flipper", c: "38,-67,30"}, {n: "Picnic", c: "300,213,7"},
+            {n: "Yogi", c: "304,189,43"}, {n: "Basket", c: "324,216,13"},
+            {n: "Boo Boo", c: "155,-256,61"}, {n: "Kitten", c: "380,83,6"},
+            {n: "Lamb", c: "427,207,10"}, {n: "Lumpy", c: "478,290,4"},
+            {n: "Piper", c: "683,-64,8"}, {n: "Spock", c: "687,539,6"},
+            {n: "Hamster", c: "717,726,8"}, {n: "Squash", c: "656,705,15"},
+            {n: "Mermaid", c: "688,853,3"}, {n: "Otter", c: "794,1007,55"},
+            {n: "Sausage", c: "521,863,8"}, {n: "Lozenge", c: "444,873,13"},
+            {n: "Sandworm", c: "325,939,23"}, {n: "Tigger", c: "392,669,3"},
+            {n: "Geordi", c: "421,653,10"}, {n: "Janeway", c: "389,587,7"},
+            {n: "Ginger", c: "384,565,3"}, {n: "Mudmole", c: "228,939,10"},
+            {n: "Moe", c: "191,726,17"}, {n: "Pancake", c: "304,523,8"},
+            {n: "Garrack", c: "289,520,11"}, {n: "Grommit", c: "281,465,8"},
+            {n: "Wallace", c: "281,453,4"}, {n: "Dragon", c: "190,439,11"},
+            {n: "Froggy", c: "72,324,10"}, {n: "Mohawk", c: "242,481,8"},
+            {n: "Bullwinkle", c: "326,434,3"}, {n: "Rocky", c: "324,429,2"}
+        ];
+
+        const svg = document.getElementById('map-overlay');
+        const img = document.getElementById('mars-img');
+        const tooltip = document.getElementById('tooltip');
+
+        function setup() {
+            // Allinea SVG alle dimensioni reali dell'immagine
+            svg.setAttribute('viewBox', `0 0 ${img.naturalWidth} ${img.naturalHeight}`);
+
+            rockData.forEach(rock => {
+                const c = rock.c.split(',');
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+
+                circle.setAttribute('cx', c[0]);
+                circle.setAttribute('cy', c[1]);
+                circle.setAttribute('r', c[2]);
+                circle.setAttribute('class', 'rock-area');
+
+                // Hover: Mostra Nome
+                circle.addEventListener('mouseenter', (e) => {
+                    tooltip.innerText = rock.n;
+                    tooltip.style.display = 'block';
+                });
+
+                // Movimento Tooltip
+                circle.addEventListener('mousemove', (e) => {
+                    tooltip.style.left = e.clientX + 'px';
+                    tooltip.style.top = e.clientY + 'px';
+                });
+
+                // Nascondi Tooltip
+                circle.addEventListener('mouseleave', () => {
+                    tooltip.style.display = 'none';
+                });
+
+                svg.appendChild(circle);
+            });
+        }
+
+        if (img.complete) setup(); else img.onload = setup;
+    </script>
+</body>
+</html>
