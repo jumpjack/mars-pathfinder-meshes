@@ -16,3 +16,5 @@
    - [Russian mirror](http://www.iki.rssi.ru/mpfmirror/roversci/site-map-Image.html)
    - [Digitec mirror](https://mpf.digitec.net/roversci/site-map-Image.html)
  
+Broken pages
+- [Demo of Marsmap software](https://web.archive.org/web/20010223050539/http://img.arc.nasa.gov/Pathfinder/marsmap2/www_demo.html), simulated via javascript; all images missing!
