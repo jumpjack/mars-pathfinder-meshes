@@ -1,5 +1,5 @@
 javascript:(async function() {
-    const H = 1.75, FOV_H = 14.4, FOV_V = 14.0;
+    const H = 1, FOV_H = 14.4, FOV_V = 14.0;
     const G_X1 = 98, G_Y1 = 132, G_X2 = 845, G_Y2 = 943;
     const G_W_PX = G_X2 - G_X1, G_H_PX = G_Y2 - G_Y1;
     const VIEW_W_M = 12, VIEW_H_M = 13;
