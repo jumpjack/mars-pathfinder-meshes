@@ -7,7 +7,7 @@ Note: footprint on map is not always precise because terrain is not flat.
 
 - Link to original site map: https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA01151.width-1024.jpg
 
-- In case the link gets broken, here it is a mirro: [local link](https://raw.githubusercontent.com/jumpjack/mars-pathfinder-meshes/refs/heads/main/bookmarklet/PIA01151.jpg)
+- In case the link gets broken, here it is a mirror: [local link](https://raw.githubusercontent.com/jumpjack/mars-pathfinder-meshes/refs/heads/main/bookmarklet/PIA01151.jpg)
 
 
 Example:  https://planetarydata.jpl.nasa.gov/img/data/mpf/imp/mpim_0002/browse/rover/rover001.htm
