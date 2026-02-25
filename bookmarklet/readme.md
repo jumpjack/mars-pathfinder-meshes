@@ -5,6 +5,11 @@ images of the original page and to show their footprint on landing site map.
 
 Note: footprint on map is not always precise because terrain is not flat.
 
+- Link to original site map: https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA01151.width-1024.jpg
+
+- In case the link gets broken, here it is a mirro: local link
+
+
 Example:  https://planetarydata.jpl.nasa.gov/img/data/mpf/imp/mpim_0002/browse/rover/rover001.htm
 
 **BEFORE**
