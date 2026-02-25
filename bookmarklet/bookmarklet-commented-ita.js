@@ -8,7 +8,7 @@
 
 (async function() {
     // --- COSTANTI DI CALIBRAZIONE FISICA E OTTICA ---
-    const H = 1.5;          // Altezza della telecamera IMP dal suolo (metri)
+    const H = 1;          // Altezza della telecamera IMP dal suolo (metri)
     const FOV_H = 14.4;      // Field of View Orizzontale (gradi)
     const FOV_V = 14.0;      // Field of View Verticale (gradi)
 
