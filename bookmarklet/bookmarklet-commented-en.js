@@ -8,7 +8,7 @@
 
 (async function() {
     // --- PHYSICAL AND OPTICAL CALIBRATION CONSTANTS ---
-    const H = 1.75;          // Height of the IMP camera mast from the ground (meters)
+    const H = 1;          // Height of the IMP camera mast from the ground (meters)
     const FOV_H = 14.4;      // Horizontal Field of View (degrees)
     const FOV_V = 14.0;      // Vertical Field of View (degrees)
 
