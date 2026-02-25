@@ -3,6 +3,8 @@ https://planetarydata.jpl.nasa.gov/img/data/mpf/imp/mpim_0002/browse/rover/    o
 type "javascript:" in  address bar, followed by [this source code](https://github.com/jumpjack/mars-pathfinder-meshes/blob/main/bookmarklet/bookmarklet.js) (*) and press ENTER: a new page will be overlayed to original page, allowing to animate the
 images of the original page and to show their footprint on landing site map.
 
+Note: footprint on map is not always precise because terrain is not flat.
+
 Example:  https://planetarydata.jpl.nasa.gov/img/data/mpf/imp/mpim_0002/browse/rover/rover001.htm
 
 **BEFORE**
