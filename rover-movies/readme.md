@@ -4,15 +4,15 @@ This page allows viewing two types of data:
 
 ## Panoramas
 
-To view panoramas, load one or more of these csv files, containing links to the tiles and obtained from index pages 
+To view panoramas, download in advance the raw version of one or more of these csv files, containing links to the tiles and obtained from index pages, then load them into the page:
 ([1](https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0001/browse/mars/index.htm), 
 [2](https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0002/browse/mars/index.htm), 
 [3](https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0003/browse/mars/index.htm)):
-- GALLERY PAN/PRESIDENTIAL PAN, TIER 1, BLUE FILTER (lander)
-- GALLERY PAN/PRESIDENTIAL PAN, TIER 2, BLUE FILTER (bottom)
-- GALLERY PAN/PRESIDENTIAL PAN, TIER 3, BLUE FILTER (middle)
-- GALLERY PAN/PRESIDENTIAL PAN, TIER 4, BLUE FILTER (horizon)
-- GALLERY PAN/PRESIDENTIAL PAN, TIER 5, BLUE FILTER (sky)
+- GALLERY PAN/PRESIDENTIAL PAN, [TIER 1](https://github.com/jumpjack/mars-pathfinder-meshes/blob/main/rover-movies/MARS-%20GALLERY%20PAN-PRESIDENTIAL%20PAN%20TIER%201%20BLUE.csv), BLUE FILTER ([lander](https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0001/browse/mars/mars021.htm))
+- GALLERY PAN/PRESIDENTIAL PAN, [TIER 2](https://github.com/jumpjack/mars-pathfinder-meshes/blob/main/rover-movies/MARS-%20GALLERY%20PAN-PRESIDENTIAL%20PAN%20TIER%202%20BLUE.csv), BLUE FILTER ([bottom](https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0001/browse/mars/mars024.htm))
+- GALLERY PAN/PRESIDENTIAL PAN, [TIER 3](https://github.com/jumpjack/mars-pathfinder-meshes/blob/main/rover-movies/MARS-%20GALLERY%20PAN-PRESIDENTIAL%20PAN%20TIER%203%20BLUE.csv), BLUE FILTER ([middle](https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0001/browse/mars/mars027.htm))
+- GALLERY PAN/PRESIDENTIAL PAN, [TIER 4](https://github.com/jumpjack/mars-pathfinder-meshes/blob/main/rover-movies/MARS-%20GALLERY%20PAN-PRESIDENTIAL%20PAN%20TIER%204%20BLUE.csv), BLUE FILTER ([horizon 1](https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0001/browse/mars/mars030.htm))
+- GALLERY PAN/PRESIDENTIAL PAN, [TIER 5](https://github.com/jumpjack/mars-pathfinder-meshes/blob/main/rover-movies/MARS-%20GALLERY%20PAN-PRESIDENTIAL%20PAN%20TIER%205%20BLUE.csv), BLUE FILTER ([horizon 2](https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0001/browse/mars/mars033.htm))
 
 Once loaded the tiles metadata, you can download JPG textures or GIF textures; 
 JPG textures are very low-res and were made available due to very low bandwidth available to the public in 1997,
