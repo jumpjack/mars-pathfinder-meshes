@@ -1,3 +1,6 @@
+<img width="957" height="659" alt="image" src="https://github.com/user-attachments/assets/4cad5aa5-e514-4b0b-8989-565845b05d92" />
+
+
 This page allows viewing two types of data:
 - Panoramas taken by the lander
 - All pictures of the rover taken by the lander during  rover operations, in movie-like sequence
