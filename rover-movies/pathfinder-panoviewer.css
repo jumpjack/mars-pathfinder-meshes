@@ -1,0 +1,354 @@
+:root {
+    --sidebar-bg: #f8f9fa;
+    --item-bg: #ffffff;
+    --primary: #007bff;
+    --success: #28a745;
+    --warning: #fd7e14;
+    --danger: #dc3545;
+    --text: #212529;
+    --sidebar-width: 450px;
+    --menu-height: 35px;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* --- MENU BAR --- */
+#navbar {
+    height: 35px;
+    background: #343a40;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    z-index: 1000;
+    position: relative; /* Essenziale */
+}
+
+.menu-item {
+    position: relative;
+    color: #fff;
+    padding: 0 15px;
+    cursor: pointer;
+    font-size: 13px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.menu-item:hover { background: #495057; }
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%; /* Si attacca esattamente al fondo del parent */
+    left: 0;
+    background: #fff;
+    min-width: 220px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border: 1px solid #ddd;
+    padding-top: 0; /* Assicura che non ci siano vuoti */
+}
+
+/* Pseudo-elemento per colmare eventuali gap invisibili del browser */
+.dropdown::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: transparent;
+}
+
+.menu-item:hover .dropdown { display: block; }
+
+.dropdown div, .dropdown label {
+    color: #333;
+    padding: 8px 15px;
+    display: block;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dropdown div:hover { background: #f1f3f5; }
+.dropdown hr { border: 0; border-top: 1px solid #eee; margin: 5px 0; }
+
+/* --- LAYOUT --- */
+#main-container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+#sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    border-right: 1px solid #dee2e6;
+    display: flex;
+    flex-direction: column; /* Gli elementi sono incolonnati */
+    height: 100vh;          /* Occupa tutta l'altezza dello schermo */
+}
+
+#renderCanvas {
+    flex-grow: 1;
+    width: 0;
+    height: 100%;
+    outline: none;
+}
+
+/* --- SIDEBAR COMPONENTS --- */
+#stats-header {
+    padding: 10px;
+    background: #fff;
+    border-bottom: 1px solid #dee2e6;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#ui-controls {
+    /* flex: 1 significa "prendi tutto lo spazio disponibile". 
+       Se ce ne sono due con lo stesso valore, faranno 50% e 50% */
+    flex: 1; 
+    overflow-y: auto; /* Attiva la scrollbar interna se il contenuto eccede */
+    min-height: 0;    /* Fondamentale: permette al pannello di rimpicciolirsi */
+    border-bottom: 2px solid #adb5bd;
+    padding: 15px;
+}
+
+
+.dropdown select {
+    width: 100%;
+    margin-top: 2px;
+    font-size: 11px;
+}
+
+#list-container {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 10px;
+    background: #e9ecef;
+}
+
+/* Sliders */
+.compact-slider-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.compact-col { display: flex; flex-direction: column; font-size: 10px; }
+
+/* Item Lista */
+.texture-item {
+    background: #fff;
+    margin-bottom: 5px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    font-size: 11px;
+}
+
+.active-highlight { border-color: var(--primary); box-shadow: 0 0 5px rgba(0,123,255,0.3); }
+
+#progress-info {
+    font-size: 10px;
+    color: #d63384;
+    padding: 5px;
+    text-align: center;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.scraping-inputs {
+    font-size: 10px;
+    background: #f1f3f5;
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.scraping-inputs input { width: 100%; font-size: 9px; margin-bottom: 4px; }
+
+
+        /* --- MENU CONTESTUALE --- */
+        #contextMenu {
+            display: none;
+            position: absolute;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border: 1px solid #ccc;
+        }
+
+        #contextMenu div {
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        #contextMenu div:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+
+/* --- STILI MODALE GUIDA --- */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: var(--primary);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}		
+
+
+/* --- NUOVO LAYOUT SLIDERS --- */
+.slider-section {
+    background: #f1f3f5;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    margin-top: 10px;
+}
+
+.slider-section-title {
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: #495057;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.slider-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Due colonne uguali */
+    gap: 5px; /* Spazio tra le colonne */
+    align-items: start;
+}
+
+.slider-col {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Spazio verticale tra i gruppi di slider */
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.control-group label {
+    font-size: 10px;
+    font-weight: bold;
+    color: #212529;
+    margin-bottom: 4px;
+    white-space: nowrap;
+}
+
+.control-group input[type="range"] {
+    width: 100%; /* Forza la larghezza identica */
+    cursor: pointer;
+    margin: 0;
+}
+
+/* Classe universale per i titoli delle sezioni nella sidebar */
+.section-title {
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: #495057;
+    margin-bottom: 12px;
+    padding: 6px;
+    background: #e9ecef;
+    border-radius: 4px;
+    border-bottom: 1px solid #adb5bd;
+    letter-spacing: 0.5px;
+    display: block;
+}
+
+
+
+/* Trasforma i titoli in tasti cliccabili */
+.section-title {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.section-title:hover {
+    background: #dee2e6;
+}
+
+/* Freccina indicatrice */
+.section-title::after {
+    content: '▼';
+    font-size: 8px;
+    transition: transform 0.3s;
+}
+
+/* Stato quando la sezione è chiusa */
+.section-container.collapsed {
+    flex: 0 0 auto !important; /* Impedisce alla sezione chiusa di prendere spazio */
+}
+
+.section-container.collapsed .section-title::after {
+    transform: rotate(-90deg);
+}
+
+.section-container.collapsed .section-content {
+    display: none; /* Nasconde il contenuto */
+}
+
+/* Contenitore flessibile per le sezioni */
+.section-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Di default prendono spazio uguale */
+    min-height: 0;
+    border-bottom: 1px solid #adb5bd;
+}
+
+/* Rimuovi flex: 1 dai vecchi ID e usali solo per lo scroll */
+#ui-controls, #list-container {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+

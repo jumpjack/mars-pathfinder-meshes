@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <!--
     IMP Explorer - Versione 1.3.0
@@ -12,424 +13,219 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IMP Explorer v1.3.0</title>
+ <link rel="stylesheet" href="pathfinder-panoviewer.css">	
     <script src="babylon.js"></script>
     <script src="babylonjs.materials.min.js"></script>
-    <style>
-        :root {
-            --sidebar-bg: #f1f3f5;
-            --item-bg: #ffffff;
-            --primary: #007bff;
-            --success: #28a745;
-            --warning: #fd7e14;
-            --danger: #dc3545;
-            --text: #212529;
-            --sidebar-width: 550px;
-        }
+    <script src="babylonjs.serializers.min.js"></script>
+    <script src="babylonjs.loaders.min.js"></script>
+    <script src="jszip.min.js"></script>
 
-        body {
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            height: 100vh;
-            background: #fff;
-        }
 
-        /* --- SIDEBAR STRUTTURA --- */
-        #sidebar {
-            width: var(--sidebar-width);
-            background: var(--sidebar-bg);
-            border-right: 1px solid #dee2e6;
-            display: flex;
-            flex-direction: column;
-            z-index: 20;
-            height: 100vh;
-        }
-
-        #stats-header {
-            padding: 10px 15px;
-            background: #fff;
-            border-bottom: 1px solid #dee2e6;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            flex-shrink: 0;
-        }
-
-        .stat-card {
-            text-align: center;
-        }
-
-        .stat-card label {
-            font-size: 9px;
-            color: #6c757d;
-            text-transform: uppercase;
-            display: block;
-        }
-
-        .stat-card span {
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        /* Metà Superiore: GUI */
-        #ui-controls {
-            height: 50%;
-            overflow-y: auto;
-            padding: 15px;
-            background: #fff;
-            border-bottom: 2px solid #adb5bd;
-            box-sizing: border-box;
-            flex-shrink: 0;
-        }
-
-        /* Metà Inferiore: LISTA */
-        #list-container {
-            flex-grow: 1;
-            height: 50%;
-            overflow-y: auto;
-            padding: 10px;
-            background: #e9ecef;
-            box-sizing: border-box;
-        }
-
-        /* --- FILTRI --- */
-        .filter-section {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            padding: 10px;
-            margin-bottom: 10px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .filter-group label {
-            font-size: 9px;
-            font-weight: bold;
-            margin-bottom: 3px;
-            color: #495057;
-        }
-
-        .filter-group select {
-            font-size: 10px;
-            padding: 3px;
-            border: 1px solid #ced4da;
-            border-radius: 3px;
-            background: white;
-        }
-
-        /* --- SLIDERS COMPATTI --- */
-        .compact-slider-row {
-            display: flex;
-            gap: 10px;
-            background: #f1f3f5;
-            padding: 8px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            border: 1px solid #dee2e6;
-        }
-
-        .compact-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .compact-col label {
-            font-size: 9px;
-            font-weight: bold;
-            margin-bottom: 4px;
-            white-space: nowrap;
-        }
-
-        .compact-col input {
-            width: 100%;
-            cursor: pointer;
-        }
-
-        /* --- ELEMENTI LISTA --- */
-        .texture-item {
-            background: var(--item-bg);
-            margin-bottom: 6px;
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ced4da;
-            transition: 0.2s;
-        }
-
-        .texture-item.active-highlight {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
-        }
-
-        .row1 {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: bold;
-        }
-
-        .row1 .file-name {
-            flex-grow: 1;
-            cursor: pointer;
-            color: var(--primary);
-            font-size: 11px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .row1 .az-el-info {
-            font-size: 10px;
-            color: #495057;
-            min-width: 85px;
-            text-align: right;
-        }
-
-        .row1 .fov-info {
-            font-size: 10px;
-            color: #6c757d;
-            min-width: 65px;
-            text-align: right;
-        }
-
-        .row2 {
-            display: flex;
-            gap: 12px;
-            color: #444;
-            margin: 5px 0;
-            padding-left: 22px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 11px;
-        }
-
-        .row3 {
-            display: flex;
-            gap: 15px;
-            padding-left: 22px;
-            border-top: 1px dashed #eee;
-            padding-top: 5px;
-            font-size: 10px;
-        }
-
-        .status-ok {
-            color: var(--success);
-            font-weight: bold;
-            margin-left: 3px;
-        }
-
-        /* --- BOTTONI --- */
-        .btn-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-
-        .btn {
-            cursor: pointer;
-            padding: 8px;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            font-weight: bold;
-            font-size: 10px;
-            text-transform: uppercase;
-        }
-
-        .btn-jpg { background: var(--success); }
-        .btn-gif { background: #6f42c1; }
-        .btn-fov { background: var(--warning); }
-        .btn-sec { background: #6c757d; }
-
-        #progress-info {
-            font-size: 10px;
-            color: #d63384;
-            text-align: center;
-            margin-bottom: 8px;
-            font-family: monospace;
-            font-weight: bold;
-            height: 14px;
-        }
-
-        #toggle-mode-container {
-            background: #e9ecef;
-            padding: 8px;
-            border-radius: 4px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            align-items: center;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        #renderCanvas {
-            flex-grow: 1;
-            outline: none;
-        }
-
-        /* --- MENU CONTESTUALE --- */
-        #contextMenu {
-            display: none;
-            position: absolute;
-            background: #fff;
-            border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-            border: 1px solid #ccc;
-        }
-
-        #contextMenu div {
-            padding: 8px 15px;
-            cursor: pointer;
-            font-size: 12px;
-            border-bottom: 1px solid #eee;
-        }
-
-        #contextMenu div:hover {
-            background: var(--primary);
-            color: #fff;
-        }
-    </style>
-</head>
-<body>
-
-<div id="sidebar">
-    <!-- Header Statistiche -->
-    <div id="stats-header">
-        <div class="stat-card"><label>Visibili/Tot</label><span id="stat-total">0/0</span></div>
-        <div class="stat-card"><label>Texture OK</label><span id="stat-tex">0</span></div>
-        <div class="stat-card"><label>Meta OK</label><span id="stat-img">0</span></div>
+<!-- BARRA DEI MENU -->
+<nav id="navbar">
+    <div class="menu-item">📁 File
+        <div class="dropdown">
+            <div onclick="document.getElementById('importGlbFile').click()">📥 Carica terreno</div>
+            <hr>
+            <div onclick="document.getElementById('importZipFile').click()">📦 Carica animazione rover</div>
+        </div>
+    </div>
+    
+    <div class="menu-item">🔍 Visualizza
+        <div class="dropdown">
+            <label><input type="radio" name="texMode" value="jpg" checked onchange="viewMode='jpg'; imagePlanes.forEach(updateMaterial)"> Terreno JPG</label>
+            <label><input type="radio" name="texMode" value="gif" onchange="viewMode='gif'; imagePlanes.forEach(updateMaterial)"> Terreno GIF</label>
+        </div>
     </div>
 
-    <!-- Area Superiore: Controlli -->
-    <div id="ui-controls">
-        <div id="file-name-display" style="font-size: 11px; font-weight: bold; margin-bottom: 8px;">
-            File: <span id="current-filename" style="color:var(--primary)">Nessun caricamento</span>
+    <div class="menu-item">⚡ Azioni
+        <div class="dropdown">
+            <div onclick="resetCameraCustom()">🔄 Reset Camera</div>
         </div>
-
-        <div style="display:flex; gap:5px; margin-bottom: 10px;">
-            <button onclick="openFilePicker('replace')" class="btn btn-sec" style="flex:1;">📂 Sostituisci</button>
-            <button onclick="openFilePicker('append')" class="btn btn-sec" style="flex:1;">➕ Aggiungi</button>
-        </div>
-        <input type="file" id="csvFile" accept=".csv, .txt" style="display:none">
-
-        <!-- Sezione Filtri Dinamici -->
-        <div class="filter-section">
-            <div class="filter-group">
-                <label>L/R</label>
-                <select id="filter-lr" onchange="applyFilters()"><option value="ALL">TUTTI</option></select>
-            </div>
-            <div class="filter-group">
-                <label>F</label>
-                <select id="filter-f" onchange="applyFilters()"><option value="ALL">TUTTI</option></select>
-            </div>
-            <div class="filter-group">
-                <label>Sol</label>
-                <select id="filter-sol" onchange="applyFilters()"><option value="ALL">TUTTI</option></select>
-            </div>
-            <div class="filter-group">
-                <label>S</label>
-                <select id="filter-s" onchange="applyFilters()"><option value="ALL">TUTTI</option></select>
-            </div>
-        </div>
-
-        <div class="btn-grid">
-            <button id="btnJpg" class="btn btn-jpg">Scarica JPG</button>
-            <button id="btnGif" class="btn btn-gif">Scarica GIF</button>
-            <button id="btnFov" class="btn btn-fov">Scarica FOV</button>
-            <button id="btnReset" class="btn btn-sec">Reset Camera</button>
-        </div>
-
-
-<!-- Sostituisci o aggiungi questo blocco nel #ui-controls, ad esempio dopo il btn-grid esistente -->
-<div id="scraping-section" style="background: #e9ecef; padding: 10px; border-radius: 4px; margin-bottom: 10px; border: 1px solid #adb5bd;">
-    <label style="font-size: 10px; font-weight: bold;">SCRAPING NASA PDS</label>
-    <div style="display:flex; gap:5px; margin-top:5px;">
-        <input type="text" id="scrape-url" value="https://planetarydata.jpl.nasa.gov/data/mpfl-m-imp-2-edr-v1.0/mpim_0003/browse/rover/index.htm" style="flex:1; font-size:9px;">
-        <button onclick="fetchIndex()" class="btn btn-sec" style="padding: 2px 5px;">SCARICA</button>
-        <button onclick="window.open(document.getElementById('scrape-url').value, '_blank')" class="btn btn-fov" style="padding: 2px 4px; font-size:9px;">APRI</button>
     </div>
-
-    <div style="display:flex; gap:5px; margin-top:5px;">
-        <select id="sub-page-list" style="flex:1; font-size:10px;"><option>Nessun indice</option></select>
-        <button onclick="fetchSubPage()" id="btn-mostra" class="btn btn-jpg" style="padding: 2px 5px;">MOSTRA</button>
-        <button onclick="window.open(document.getElementById('sub-page-list').value, '_blank')" class="btn btn-fov" style="padding: 2px 4px; font-size:9px;">APRI</button>
-    </div>
-
-    <div id="slider-mobile-container" style="margin-top:10px; display:none;">
-        <label style="font-size: 10px; font-weight: bold;">Mobile Tile: <span id="mobile-info">0/0</span></label>
-        <input type="range" id="mobileSlider" min="0" max="0" step="1" value="0" style="width:100%">
-        <div id="mobile-filename" style="font-size: 9px; color: var(--primary); overflow: hidden; text-overflow: ellipsis;">-</div>
-<div id="mobile-meta-display" style="font-size: 10px; font-weight: bold; color: #d63384; background: #fff; padding: 2px 5px; border-radius: 3px; border: 1px solid #dee2e6; white-space: nowrap;">
-            Az: -- | El: --
-        </div>
+	
+<div class="menu-item">  Sviluppo
+    <div class="dropdown">
+        <!-- AGGIUNTO: Comando per mostrare gli slider -->
+        <div onclick="toggleAdjustments()" style="font-weight: bold; color: var(--primary);">⚙️ Pannello di controllo</div>
+        <hr>
+		<div>Panorama</div>
+        <div onclick="openFilePicker('replace')">📂 Carica da CSV</div>
+        <div onclick="openFilePicker('append')">➕ Aggiungi da CSV</div>
+        <div onclick="downloadMissing('jpg')">🖼️ Scarica tutte le JPG</div>
+        <div onclick="downloadMissing('gif')">🎞️ Scarica tutte le GIF</div>
+        <div onclick="downloadMissingFOV()">📏 Scarica tutti i FOV (IMG)</div>
+        <div onclick="exportScene()">📤 Esporta terreno</div>
+        <hr>
+		<div>Animazione rover</div>
+        <div onclick="preloadMetadataTab('url')">🌐 Scarica edrindex.tab da URL</div>
+        <div onclick="document.getElementById('localTabFile').click()">📂 Carica edrindex.tab locale</div>
+        <div onclick="fetchIndex()">🌐 Scarica elenco sequenze</div>
+        <div onclick="fetchSubPage()">🎬 Elabora sequenza selezionata</div>
+        <div onclick="exportToZip()">📦 Esporta animazione rover</div>
+		<hr>
+		<div style="font-weight:bold; padding-bottom:2px;">Filtri:</div>
+		<div>L/R: <select id="filter-lr" onchange="applyFilters()"></select></div>
+		<div>F: <select id="filter-f" onchange="applyFilters()"></select></div>
+		<div>Sol: <select id="filter-sol" onchange="applyFilters()"></select></div>
+		<div>S: <select id="filter-s" onchange="applyFilters()"></select></div>
+        <hr>
     </div>
 </div>
 
+    <div class="menu-item">  Guida
+        <div class="dropdown">
+            <div onclick="showHelp('panorama')">CSV panorama</div>
+            <div onclick="showHelp('tab')">file .TAB</div>
+            <div onclick="showHelp('JPG')">GIF/JPG terreno</div>
+            <div onclick="showHelp('FOV')">FOV terreno</div>
+            <div onclick="showHelp('video')">Sequenze video rover</div>
+       </div>
+    </div>
+	
+</nav>
 
+<div id="main-container">
+    <div id="sidebar">
+        <!-- Statistiche -->
+        <div id="stats-header">
+            <div class="stat-card"><label>Visibili</label><span id="stat-total">0/0</span></div>
+            <div class="stat-card"><label>Tex OK</label><span id="stat-tex">0</span></div>
+            <div class="stat-card"><label>IMG OK</label><span id="stat-img">0</span></div>
+        </div>
+
+		<!-- BARRA DI PROGRESSO PRECARICAMENTO -->
+		<div id="preload-progress-container" style="display:none; margin-top:10px; background:#fff; padding:5px; border-radius:3px; border:1px solid #ccc;">
+			<div style="display:flex; justify-content:space-between; font-size:9px; margin-bottom:3px;">
+				<span style="font-weight:bold;">Precaricamento...</span>
+				<span id="preload-count">0/0</span>
+			</div>
+			<div style="width:100%; height:6px; background:#eee; border-radius:3px; overflow:hidden;">
+				<div id="preload-bar" style="width:0%; height:100%; background:var(--success); transition:width 0.1s;"></div>
+			</div>
+		</div>
+			
         <div id="progress-info">Sistema pronto.</div>
 
-        <!-- Parametri Principali -->
-        <div style="margin-bottom: 10px;">
-            <label style="font-size:11px; font-weight:bold;">Distanza: <span id="distVal">15</span>m | Scala: <span id="scaleVal">1.0</span>x</label>
-            <div style="display:flex; gap:10px;">
-                <input type="range" id="distSlider" min="1" max="100" step="0.5" value="15" style="flex:1">
-                <input type="range" id="scaleSlider" min="0.1" max="5" step="0.1" value="1.0" style="flex:1">
+            <!-- Mobile Slider -->
+            <div id="slider-mobile-container" style="display:none; margin-top:10px; border-top:1px solid #ccc; padding-top:5px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:10px; font-weight:bold;">Tile: <span id="mobile-info">0/0</span></span>
+                    <label style="font-size:10px; color:var(--primary);"><input type="checkbox" id="followMobile"> Follow</label>
+                </div>
+                <input type="range" id="mobileSlider" min="0" max="0" value="0" style="width:100%">
+				<div id="mobile-filename" style="font-size: 9px; color: var(--primary); font-family: monospace; overflow: hidden; text-overflow: ellipsis; flex: 1;">-</div>	
+				<div id="mobile-meta-display" style="font-size: 10px; font-weight: bold; color: #d63384; background: #fff; padding: 1px 4px; border-radius: 3px; border: 1px solid #dee2e6; white-space: nowrap;">Az: -- | El: --</div>			
+                <div id="mobile-timestamp" style="font-size:9px; color:#666;">-</div>
+				<div id="mobile-sol-display" style="font-size: 10px; font-weight: bold; color: #28a745; background: #fff; padding: 1px 4px; border-radius: 3px; border: 1px solid #dee2e6;">Sol: --</div>				
             </div>
-        </div>
-
-        <!-- Sliders Assetto Compatti -->
-        <div class="compact-slider-row">
-            <div class="compact-col">
-                <label>OffX: <span id="offXVal">0</span></label>
-                <input type="range" id="offXSlider" min="-0.2" max="0.2" step="0.001" value="0">
-            </div>
-            <div class="compact-col">
-                <label>OffY: <span id="offYVal">0</span></label>
-                <input type="range" id="offYSlider" min="-0.2" max="0.2" step="0.001" value="0">
-            </div>
-            <div class="compact-col">
-                <label>TiltX: <span id="tiltXVal">0</span>°</label>
-                <input type="range" id="tiltXSlider" min="-15" max="15" step="0.1" value="0">
-            </div>
-            <div class="compact-col">
-                <label>TiltZ: <span id="tiltZVal">0</span>°</label>
-                <input type="range" id="tiltZSlider" min="-15" max="15" step="0.1" value="0">
-            </div>
-        </div>
-
-        <div id="toggle-mode-container">
-            Visualizzazione Texture:
-            <label><input type="radio" name="texMode" value="jpg" checked> JPG</label>
-            <label><input type="radio" name="texMode" value="gif"> GIF</label>
-        </div>
+			
+        <!-- Controlli -->
+        <div id="ui-controls" >
+			<div class="section-container" id="section-rover">
+				<div class="section-title" onclick="toggleSection('section-rover')">Animazione Rover</div>
+				<div class="section-content" style="padding: 10px; background: #fff;">			
+					<div class="scraping-inputs" style="font-size:11px;">
+						Tabella metadati immagini:
+						<input type="text" id="tab-url" value= "mpim_0003/index/edrindex.tab">
+						<div id="tab-status" style="font-size:9px; color:var(--danger); margin-top:2px;">TAB non caricato</div><br>
+						Indice sequenze:
+						<input type="text" id="scrape-url" value= "/mpim_0002/browse/rover/index.htm">
+						Squenze disponibili in indice selezionato:
+						<select id="sub-page-list" style="width:100%"><option>Nessun indice</option></select>
+					</div>			
+				</div>
+			</div>
 
 
-    </div>
+		   <!-- SEZIONE 2: REGOLAZIONI PANORAMA -->
+			<div class="section-container" id="section-settings">
+				<div class="section-title" onclick="toggleSection('section-settings')">Regolazioni Panorama</div>
+				<div class="section-content" id="test">
+					<div class="slider-section">
+						<div class="slider-grid">
+						
+							<!-- Colonna Sinistra -->
+							<div class="slider-col">
+								<div class="control-group">
+									<label>Raggio sfera: <span id="distVal">15</span>m</label>
+									<input type="range" id="distSlider" min="1" max="100" step="0.5" value="15">
+								</div>
+								<div class="control-group">
+									<label>Dimensione tile: <span id="scaleVal">1.0</span></label>
+									<input type="range" id="scaleSlider" min="0.1" max="5" step="0.1" value="1.0">
+								</div>
+							</div>
 
-    <!-- Area Inferiore: Lista -->
-    <div id="list-container"></div>
+							<!-- Colonna Destra -->
+							<div class="slider-col">
+								<div class="control-group">
+									<label>Altezza camera: <span id="mastVal">0.00</span>m</label>
+									<input type="range" id="mastSlider" min="-3" max="2" step="0.01" value="0">
+								</div>
+								<div class="control-group">
+									<label>Offset X: <span id="offXVal">0</span></label>
+									<input type="range" id="offXSlider" min="-0.2" max="0.2" step="0.001" value="0">
+								</div>
+								<div class="control-group">
+									<label>Offset Y: <span id="offYVal">0</span></label>
+									<input type="range" id="offYSlider" min="-0.2" max="0.2" step="0.001" value="0">
+								</div>
+								<div class="control-group">
+									<label>Tilt X: <span id="tiltXVal">0</span>°</label>
+									<input type="range" id="tiltXSlider" min="-15" max="15" step="0.1" value="0">
+								</div>
+								<div class="control-group">
+									<label>Tilt Z: <span id="tiltZVal">0</span>°</label>
+									<input type="range" id="tiltZSlider" min="-15" max="15" step="0.1" value="0">
+								</div>
+							</div>
+							
+						</div> <!-- slider-grid -->
+					</div> <!-- slider-section -->
+				</div> <!-- section-content -->
+			</div> <!-- section-container -->
+
+				
+			<!-- SEZIONE 3: ELENCO IMMAGINI -->
+			<div class="section-container" id="section-list">
+				<div class="section-title" onclick="toggleSection('section-list')">Elenco Immagini</div>
+				<div class="section-content" id="list-container">
+					Nessun panorama caricato
+				</div> <!-- section-content -->
+			</div> <!-- section-container -->
+		</div> <!-- ui controls -->
+</div> <!-- sidebar -->
+
+
+    <canvas id="renderCanvas"></canvas>
+	
 </div>
 
-<!-- Menu Contestuale -->
+<!-- Input File Nascosti -->
+<input type="file" id="csvFile" style="display:none" accept=".csv">
+<input type="file" id="importGlbFile" style="display:none" onchange="importScene(event)" accept=".glb,.gltf" >
+<input type="file" id="importZipFile" style="display:none" onchange="importFromZip(event)" accept=".zip" >
+<input type="file" id="localTabFile" style="display:none" onchange="preloadMetadataTab('file')"  accept=".tab">
+
+<!-- Context Menu -->
 <div id="contextMenu">
     <div onclick="retryFov()">Scarica Dati FOV (IMG)</div>
     <div onclick="retryTexSpecific('jpg')">Scarica Texture JPG</div>
     <div onclick="retryTexSpecific('gif')">Scarica Texture GIF</div>
 </div>
 
-<canvas id="renderCanvas"></canvas>
+<!-- Modal per la Guida -->
+<div id="helpModal" class="modal-overlay" onclick="closeHelp(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <h3 id="helpTitle">Guida</h3>
+        <div id="helpBody" style="white-space: pre-line; line-height: 1.6;">
+            <!-- Il testo verrà inserito qui -->
+        </div>
+        <button onclick="document.getElementById('helpModal').style.display='none'" class="btn btn-sec" style="margin-top: 20px; width: 100%;">Chiudi</button>
+    </div>
+</div>
+
 
 <script>
 /*
@@ -440,6 +236,25 @@ CSV format:
 
 */
 
+    function resetCameraCustom() {
+        camera.targetScreenOffset.x = 0;
+        camera.targetScreenOffset.y = 0;
+        camera.setTarget(BABYLON.Vector3.Zero());
+        camera.alpha = -Math.PI / 2;
+        camera.beta = Math.PI / 2;
+        camera.radius = 30;
+        engine.resize();
+    }
+	
+	   async function downloadMissingFOV() {
+        const list = imagePlanes.filter(p => p.isEnabled() && !p.metadata.imgLoaded);
+        for (let i = 0; i < list.length; i++) {
+            await fetchFOV(list[i]);
+            document.getElementById('progress-info').innerText = `FOV: ${i+1}/${list.length}`;
+            await sleep(300);
+        }
+    }
+
     /* -------------------------------------------------------------------------
        1. SETUP INIZIALE E VARIABILI
        ------------------------------------------------------------------------- */
@@ -447,6 +262,14 @@ CSV format:
     const canvas = document.getElementById("renderCanvas");
     const engine = new BABYLON.Engine(canvas, true);
     const PROXY_URL = "https://win98.altervista.org/space/exploration/myp.php?pass=miapass&mode=native&url=";
+	
+	// Datasets:
+	// https://planetarydata.jpl.nasa.gov/img/data/mpf/imp/
+	// https://planetarydata.jpl.nasa.gov/data/mpfl-m-imp-2-edr-v1.0/
+	// https://pds.nasa.gov/data/mpfl-m-imp-2-edr-v1.0/
+	const SERVER_BASE = "https://planetarydata.jpl.nasa.gov/"; 
+	const SERVER_DATASET =  SERVER_BASE  + "data/mpfl-m-imp-2-edr-v1.0/"; 
+	
     const DEFAULT_FOV = 14.0;
     const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -457,110 +280,279 @@ let scrapedData = [];
 let mobilePlane = null;
 let isScraping = false;
 const mobileTextureCache = new Map();
+let metadataMasterMap = new Map(); // Cache: "I1234567" -> {az, el}
+const MOBILE_DISTANCE = 0.99; // Percentuale distanca tile mobile da telecamera rispetto a tile fisse
+let startPointerPos = { x: 0, y: 0 };
 
-// 1. Scarica l'indice principale e popola la select
+
+// 1. Scarica l'indice principale e popola la select con conteggio dinamico
+
 async function fetchIndex() {
     const url = document.getElementById('scrape-url').value;
-console.log("Scarico indice immagini...", url);
+    console.log("Scarico indice immagini...", url);
     const info = document.getElementById('progress-info');
     info.innerText = "Scaricamento indice...";
 
     try {
         const response = await fetch(PROXY_URL + encodeURIComponent(url));
-//console.log("Scaricato:",response);
         const html = await response.text();
-//console.log("html:",html);
 
-        // Cerca link tipo mars000.htm, mars001.htm, ecc.
         const regex = /href="([^"]+\.htm)"/gi;
         let match;
         const select = document.getElementById('sub-page-list');
         select.innerHTML = "";
 
         let baseDir = url.substring(0, url.lastIndexOf('/') + 1);
+        const pagesToCount = [];
 
         while ((match = regex.exec(html)) !== null) {
             const fileName = match[1];
             if (fileName.toLowerCase() === "index.htm") continue;
+            
             const opt = document.createElement('option');
             opt.value = baseDir + fileName;
-            opt.innerText = fileName;
+            // Testo temporaneo col nome file originale
+            opt.innerText = `${fileName} (caricamento dati...)`; 
             select.appendChild(opt);
+            
+            pagesToCount.push({
+                url: baseDir + fileName,
+                name: fileName,
+                optionElement: opt
+            });
         }
-        info.innerText = "Indice caricato.";
+        
+        info.innerText = "Indice caricato. Estrazione titoli e conteggi...";
+
+        for (let i = 0; i < pagesToCount.length; i++) {
+            const page = pagesToCount[i];
+            try {
+                const subRes = await fetch(PROXY_URL + encodeURIComponent(page.url));
+                const subHtml = await subRes.text();
+                
+                // 1. ESTRAZIONE TITOLO
+                const titleMatch = subHtml.match(/<title>(.*?)<\/title>/i);
+                let fullTitle = titleMatch ? titleMatch[1].trim() : page.name;
+                
+                // Pulizia opzionale: rimuoviamo "NASA PDS:" o simili se presenti all'inizio
+                fullTitle = fullTitle.replace(/^NASA PDS:\s*/i, "");
+
+                // 2. CONTEGGIO IMMAGINI
+                const imgLinksRegex = /href="([^"]+\/[^"]+\/[^"]+\.htm)"/gi;
+                const matches = subHtml.match(imgLinksRegex);
+                const count = matches ? matches.length : 0;
+                
+                // 3. AGGIORNAMENTO OPTION
+                // Tagliamo ai primi 20 caratteri per la visualizzazione
+                const shortTitle = fullTitle.length > 20 ? fullTitle.substring(0, 30) + "..." : fullTitle;
+                
+                page.optionElement.innerText = `${shortTitle} (${count})`;
+                
+                // 4. TOOLTIP (Attributo title)
+                // Questo farà apparire il titolo completo e il nome file originale al passaggio del mouse
+                page.optionElement.title = `Titolo: ${fullTitle}\nFile: ${page.name}\nImmagini: ${count}`;
+                
+                if (i % 5 === 0 || i === pagesToCount.length - 1) {
+                    info.innerText = `Analisi: ${i + 1}/${pagesToCount.length} pagine`;
+                }
+                
+                await sleep(40); 
+            } catch (err) {
+                page.optionElement.innerText = `${page.name} (errore dati)`;
+            }
+        }
+        
+        info.innerText = "Indice pronto.";
     } catch (e) {
         info.innerText = "Errore caricamento indice.";
     }
 }
 
-// 2. Scarica la pagina scelta e tutti i metadati delle immagini contenute
+
 async function fetchSubPage() {
     if(isScraping) return;
-    isScraping = true;
+    
+    if (metadataMasterMap.size === 0) {
+        await preloadMetadataTab('url');
+        if (metadataMasterMap.size === 0) {
+            alert("Caricare prima il file .TAB dei metadati.");
+            return;
+        }
+    }
+
     const url = document.getElementById('sub-page-list').value;
-console.log("url=",url);
+    if(!url || url.includes("Nessun")) return;
+    
+    isScraping = true;
     const info = document.getElementById('progress-info');
-    info.innerText = "Lettura pagina immagini...";
+    info.innerText = "Analisi pagina...";
 
     try {
         const response = await fetch(PROXY_URL + encodeURIComponent(url));
         const html = await response.text();
 
-        // Trova tutti i link .htm che sono pagine di metadati delle immagini
-        // Es: seq0194/c1250xxx/i044188r.htm
-        const regex = /href="([^"]+\/[^"]+\/[^"]+\.htm)"/gi;
+        
+        const regex = /href="([^"]+\/[^"]+\/([^"\/]+\.htm))"/gi;
         let match;
-        const metaUrls = [];
-        let baseDir = url.substring(0, url.lastIndexOf('/') + 1);
-
-        while ((match = regex.exec(html)) !== null) {
-            metaUrls.push(baseDir + match[1]);
-        }
-
         scrapedData = [];
-        info.innerText = `Scaricamento metadati: 0/${metaUrls.length}`;
+        let baseDir = url.substring(0, url.lastIndexOf('/') + 1);
+		let MPMarchive2 =  baseDir.substring(url.toLowerCase().indexOf("mpim"),100);
 
-        for(let i=0; i < metaUrls.length; i++) {
-            const mUrl = metaUrls[i];
-            info.innerText = `Meta: ${i+1}/${metaUrls.length}`;
 
-            try {
-                const res = await fetch(PROXY_URL + encodeURIComponent(mUrl));
-                const mHtml = await res.text();
+while ((match = regex.exec(html)) !== null) {
 
-                // Regex per Azimuth ed Elevation basate sul tuo formato <tr>...
-                const azMatch = mHtml.match(/Surface Based Inst\. Azimuth<\/a><\/td>\s*<td[^>]*>([\d.-]+)<\/td>/i);
-//console.log("azMatch:",azMatch);
-               const elMatch = mHtml.match(/Surface Based Inst\. Elevation<\/a><\/td>\s*<td[^>]*>([\d.-]+)<\/td>/i);
-//console.log("elMatch:",elMatch);
+    let pathKey = MPMarchive2 + match[1].toLowerCase().split('.')[0];
 
-                if(azMatch && elMatch) {
-                    const name = mUrl.substring(mUrl.lastIndexOf('/') + 1).replace('.htm', '');
-                    const imgUrl = mUrl.replace('.htm', '.gif');
-//console.log("Metadati scaricati, ora scarico immagine:",imgUrl);
-                    scrapedData.push({
-                        name: name,
-                        az: parseFloat(azMatch[1]),
-                        el: parseFloat(elMatch[1]),
-                        imgUrl: imgUrl
-                    });
-                }
-            } catch(e) { console.error("Errore meta", mUrl); }
-            await sleep(100); // Piccolo delay per non saturare
-        }
+    // Cerchiamo nella mappa usando il percorso completo
+    const meta = metadataMasterMap.get(pathKey);
+//console.log("[fetchSubPage] meta=", meta); 
+
+    if (meta) {
+		if(meta.time) {
+			if(meta.time !== 0) {
+				scrapedData.push({
+					name: match[2].split('.')[0].toLowerCase(), // Solo per visualizzazione
+					az: meta.az,
+					el: meta.el,
+					time: meta.time,
+					timestamp: meta.timestamp,
+					sol: meta.sol,
+					// Usiamo il percorso originale per la texture
+					imgUrl: baseDir + match[1].replace('.htm', '.gif'),
+					imgUrl2 : meta.relImagePath
+				});
+			} else {
+	console.log("ERROR 1: NO TIME?!?", meta);			
+			}
+		} else {
+console.log("ERROR 2: NO TIME?!?", meta);			
+		}
+    } else {
+        console.warn("[fetchSubPage] Metadati non trovati per il percorso:", pathKey);
+    }
+}
 
         if(scrapedData.length > 0) {
-console.log("Dati finali: ",scrapedData);
-            setupMobileSlider();
-            info.innerText = "Completato. Usa lo slider.";
+console.log("============ scrapedData", scrapedData);			
+			// Aggiungi il timestamp per l'ordinamento
+			/*scrapedData.forEach(item => {
+				const meta = metadataMasterMap.get(item.name);
+				item.time = meta ? meta.time : 0;
+			});*/
+
+			// ORDINAMENTO CRONOLOGICO
+			scrapedData.sort((a, b) => a.time - b.time);			
+			
+            // Avvia il precaricamento invece di mostrare subito lo slider
+            await preloadScrapedImages();
         } else {
-            info.innerText = "Nessun dato trovato.";
+            info.innerText = "Nessuna corrispondenza trovata.";
+            isScraping = false;
         }
-    } catch (e) {
-        info.innerText = "Errore durante lo scraping.";
-    } finally {
+    } catch (e) { 
+        info.innerText = "Errore scraping."; 
         isScraping = false;
     }
+}
+
+async function preloadScrapedImages() {
+    const progressContainer = document.getElementById('preload-progress-container');
+    const progressBar = document.getElementById('preload-bar');
+    const progressText = document.getElementById('preload-count');
+    const info = document.getElementById('progress-info');
+    const sliderContainer = document.getElementById('slider-mobile-container');
+
+    sliderContainer.style.display = 'none';
+    progressContainer.style.display = 'block';
+    mobileTextureCache.clear();
+
+for (let i = 0; i < scrapedData.length; i++) {
+        const data = scrapedData[i];
+        const currentCount = i + 1;
+        
+        progressText.innerText = `${currentCount} / ${scrapedData.length}`;
+        progressBar.style.width = `${(currentCount / scrapedData.length) * 100}%`;
+        info.innerText = `Caricamento tile ${currentCount}...`;
+
+        console.log(`[Preload] Tentativo ${currentCount}/${scrapedData.length}: ${data.name}`);
+
+        try {
+            const fullUrl = PROXY_URL + encodeURIComponent(data.imgUrl);
+            const response = await fetch(fullUrl);
+            
+            if (!response.ok) {
+                console.error(`[Preload ERROR] Risposta server non valida per ${data.name}. Status: ${response.status}`, data.imgUrl);
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const arrayBuffer = await response.arrayBuffer();
+            if (arrayBuffer.byteLength === 0) {
+                console.error(`[Preload ERROR] Ricevuti 0 byte per ${data.name}`);
+                continue;
+            }
+
+            const byteArray = new Uint8Array(arrayBuffer);
+
+            // Trova firma GIF ("GIF8")
+            let startOffset = -1;
+            for (let j = 0; j < byteArray.length - 5; j++) {
+                if (byteArray[j] === 71 && byteArray[j+1] === 73 && byteArray[j+2] === 70 && byteArray[j+3] === 56) {
+                    startOffset = j;
+                    break;
+                }
+            }
+
+            if (startOffset === -1) {
+                console.error(`[Preload ERROR] Firma GIF ('GIF8') non trovata nei dati di ${data.name}.`);
+                // Debug dei primi byte per capire cosa ha risposto il server (magari un errore HTML)
+                const snippet = String.fromCharCode.apply(null, byteArray.slice(0, 50));
+                console.log(`[Preload DEBUG] Primi 50 byte ricevuti: ${snippet}`);
+                continue;
+            }
+
+            const cleanData = byteArray.slice(startOffset);
+            const blob = new Blob([cleanData], { type: 'image/gif' });
+            data.blob = blob; 
+            
+            // Creazione texture Babylon (Promisified)
+            await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onerror = () => {
+                    console.error(`[Preload ERROR] FileReader fallito per ${data.name}`);
+                    reject();
+                };
+                reader.onloadend = () => {
+                    const tex = new BABYLON.Texture(reader.result, scene, false, true, BABYLON.Texture.TRILINEAR_SAMPLINGMODE, 
+                        () => {
+                            tex.uScale = -1;
+                            tex.uOffset = 1;
+                            tex.hasAlpha = true;
+                            mobileTextureCache.set(data.imgUrl, tex);
+                            console.log(`[Preload OK] ${data.name} caricata e pronta.`);
+                            resolve();
+                        }, 
+                        (msg, exception) => {
+                            console.error(`[Preload ERROR] Babylon non ha potuto decodificare la GIF per ${data.name}:`, msg, exception);
+                            reject();
+                        }, 
+                        false, null, ".gif"
+                    );
+                };
+                reader.readAsDataURL(blob);
+            });
+
+        } catch (err) {
+            console.error(`[Preload CATCH] Eccezione durante il caricamento di ${data.name}:`, err);
+        }
+        
+        // Piccolo delay per non bloccare il thread UI durante i calcoli delle texture
+        if (i % 3 === 0) await sleep(10);
+    }
+
+    progressContainer.style.display = 'none';
+    info.innerText = "Caricamento completato.";
+    isScraping = false;
+    setupMobileSlider();
 }
 
 function setupMobileSlider() {
@@ -577,103 +569,37 @@ function setupMobileSlider() {
 
 
 
+
 async function updateMobileTile(idx) {
-console.log("[updateMobileTile] idx=",idx);
     const data = scrapedData[idx];
     if (!data) return;
-console.log("[updateMobileTile] ok...");
 
     document.getElementById('mobile-info').innerText = `${idx + 1} / ${scrapedData.length}`;
-    document.getElementById('mobile-filename').innerText = data.name + ".gif";
-
-    // MOSTRA METADATI ORIGINALI PER DEBUG
+    document.getElementById('mobile-filename').innerHTML = '<a href="' + data.imgUrl + '">' + data.name + ".gif" + '</a>';
     document.getElementById('mobile-meta-display').innerText = `Az: ${data.az.toFixed(2)}° | El: ${data.el.toFixed(2)}°`;
-
-
-    // Aggiorna posizione
-    mobilePlane.metadata.az = data.az * Math.PI / 180; // DEBUG tolgo "-" perchè la tile mobile si posiziona male...
+    document.getElementById('mobile-timestamp').innerText = data.timestamp || "N/A";
+    document.getElementById('mobile-sol-display').innerText = `Sol: ${data.sol || "--"}`;
+	
+    // Posizionamento
+    mobilePlane.metadata.az = data.az * Math.PI / 180;
     mobilePlane.metadata.el = data.el * Math.PI / 180;
     mobilePlane.isVisible = true;
     mobilePlane.setEnabled(true);
-console.log("[updateMobileTile] call updatePlaneGeom");
     updatePlaneGeom(mobilePlane);
-console.log("[updateMobileTile] call updatePlaneGeom  DONE");
 
-    const cacheKey = data.imgUrl;
-
-    // --- 1. Gestione Feedback Immediato ---
-    // Rimuoviamo la texture attuale: l'utente vedrà il colore giallo (o quello del materiale)
-    // Questo evita la confusione con l'immagine del frame precedente
-    if (mobilePlane.material) {
-        mobilePlane.material.diffuseTexture = null;
-    }
-
-    // --- 2. Controllo Cache ---
-    if (mobileTextureCache.has(cacheKey)) {
-        console.log("Texture caricata dalla cache:", data.name);
-        mobilePlane.material.diffuseTexture = mobileTextureCache.get(cacheKey);
-        return; // Fine, non scarichiamo nulla
-    }
-
-    // --- 3. Scaricamento (se non in cache) ---
-    const fullUrl = PROXY_URL + encodeURIComponent(data.imgUrl) + "&t=" + Date.now();
-    console.log("Scaricamento nuova texture mobile:", data.imgUrl);
-
-    try {
-        const response = await fetch(fullUrl);
-        if (!response.ok) throw new Error("Errore proxy: " + response.status);
-        const arrayBuffer = await response.arrayBuffer();
-        const byteArray = new Uint8Array(arrayBuffer);
-
-        let startOffset = -1;
-        for (let i = 0; i < byteArray.length - 5; i++) {
-            if (byteArray[i] === 71 && byteArray[i+1] === 73 && byteArray[i+2] === 70 && byteArray[i+3] === 56) {
-                startOffset = i;
-                break;
-            }
-        }
-
-        if (startOffset === -1) {
-            console.error("Firma GIF non trovata.");
-            mobilePlane.material = errorMaterial;
-            return;
-        }
-
-        const cleanData = byteArray.slice(startOffset);
-        const blob = new Blob([cleanData], { type: 'image/gif' });
-
-        const reader = new FileReader();
-        reader.onloadend = function() {
-            const base64data = reader.result;
-
-            const tex = new BABYLON.Texture(base64data, scene, false, true, BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
-                () => {
-                    tex.uScale = -1;
-                    tex.uOffset = 1;
-                    tex.hasAlpha = true;
-
-                    // Salviamo nella cache per i prossimi utilizzi
-                    mobileTextureCache.set(cacheKey, tex);
-
-                    // Applichiamo
-                    const mat = new BABYLON.StandardMaterial("mobMat", scene);
-                    mat.diffuseTexture = tex;
-                    mat.specularColor = new BABYLON.Color3(0,0,0);
-                    mat.backFaceCulling = false;
-                    mobilePlane.material = mat;
-
-                    console.log("Texture applicata e salvata in cache.");
-                },
-                null, null, false, null, ".gif"
-            );
-        };
-        reader.readAsDataURL(blob);
-
-    } catch (err) {
-        console.error("Errore download tile mobile:", err);
+	
+    // Recupero dalla cache (già popolata dal preloader)
+    if (mobileTextureCache.has(data.imgUrl)) {
+        const mat = new BABYLON.StandardMaterial("mobMat", scene);
+        mat.diffuseTexture = mobileTextureCache.get(data.imgUrl);
+        mat.specularColor = new BABYLON.Color3(0,0,0);
+        mat.backFaceCulling = false;
+        mobilePlane.material = mat;
+    } else {
         mobilePlane.material = errorMaterial;
     }
 }
+
 
     const createScene = () => {
         scene = new BABYLON.Scene(engine);
@@ -684,8 +610,31 @@ console.log("[updateMobileTile] call updatePlaneGeom  DONE");
         errorMaterial.diffuseColor = new BABYLON.Color3(1, 0, 0);
         errorMaterial.backFaceCulling = false;
 
-        camera = new BABYLON.ArcRotateCamera("camera", -Math.PI/2, Math.PI/2.5, 30, BABYLON.Vector3.Zero(), scene);
-        camera.attachControl(canvas, true);
+    // Beta = Math.PI / 2 (90°) mette la telecamera esattamente "al livello del suolo"
+    // Questo garantisce che l'orizzonte (e il punto 0,0,0) sia al centro verticale perfetto.
+    camera = new BABYLON.ArcRotateCamera("camera", -Math.PI/1.5, Math.PI/2, 30, BABYLON.Vector3.Zero(), scene);
+	
+// Rende lo zoom proporzionale alla distanza (meno sensibile quando sei vicino)
+camera.wheelDeltaPercentage = 0.01; // Muove dell'1% della distanza a ogni scatto
+camera.pinchDeltaPercentage = 0.01; // Stessa cosa per il pinch-to-zoom su mobile
+
+// Opzionale: imposta un limite minimo per non finire "dentro" il pivot (10cm)
+camera.lowerRadiusLimit = 0.1;
+	
+    camera.attachControl(canvas, true);
+
+
+    camera.alpha = -2.068; 
+    camera.beta = 1.0868;   
+    camera.radius = 30;   
+    camera.target = new BABYLON.Vector3(0,0,0);//(-0.47, -3.623, -0.86); 
+    //camera.targetScreenOffset.y = 5; 
+	
+    
+    // FORZA LA CENTRATURA VERTICALE:
+    // Questa opzione assicura che il punto di fuga centrale non si sposti con il ridimensionamento
+    camera.fovMode = BABYLON.Camera.FOVMODE_VERTICAL_FIXED;
+	
         new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
 
         const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 2000, height: 2000}, scene);
@@ -694,28 +643,146 @@ console.log("[updateMobileTile] call updatePlaneGeom  DONE");
         ground.material = grid; ground.isPickable = false;
 
         // Picking e Context Menu
-        scene.onPointerObservable.add((p) => {
-            const pickPredicate = (m) => m.name.startsWith("plane_") && m.isEnabled() && m.isVisible;
-            const pick = scene.pick(scene.pointerX, scene.pointerY, pickPredicate);
+scene.onPointerObservable.add((p) => {
+    const pickPredicate = (m) => m.name.startsWith("plane_") && m.isEnabled() && m.isVisible;
 
-            if (p.type === BABYLON.PointerEventTypes.POINTERDOWN) {
-                document.getElementById("contextMenu").style.display = "none";
+    if (p.type === BABYLON.PointerEventTypes.POINTERDOWN) {
+        // Nascondi menu all'inizio di ogni interazione
+        document.getElementById("contextMenu").style.display = "none";
+        
+        // Memorizza posizione iniziale
+        startPointerPos.x = scene.pointerX;
+        startPointerPos.y = scene.pointerY;
+
+        // Se è click sinistro, evidenzia subito nella lista
+        if (p.event.button === 0) {
+            const pick = scene.pick(scene.pointerX, scene.pointerY, pickPredicate);
+            if (pick.hit) highlightInList(pick.pickedMesh.metadata.index);
+        }
+    }
+
+    if (p.type === BABYLON.PointerEventTypes.POINTERUP) {
+        // Gestione Menu Contestuale (Tasto Destro)
+        if (p.event.button === 2) {
+            const dx = scene.pointerX - startPointerPos.x;
+            const dy = scene.pointerY - startPointerPos.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            // Se il mouse si è mosso meno di 5 pixel, è un click, non un panning
+            if (dist < 5) {
+                const pick = scene.pick(scene.pointerX, scene.pointerY, pickPredicate);
                 if (pick.hit) {
-                    const idx = pick.pickedMesh.metadata.index;
-                    highlightInList(idx);
-                    if (p.event.button === 2) { // Tasto Destro
-                        lastRightClickedMesh = pick.pickedMesh;
-                        const cm = document.getElementById("contextMenu");
-                        cm.style.left = p.event.clientX + "px";
-                        cm.style.top = p.event.clientY + "px";
-                        cm.style.display = "block";
-                    }
+                    lastRightClickedMesh = pick.pickedMesh;
+                    highlightInList(pick.pickedMesh.metadata.index);
+                    const cm = document.getElementById("contextMenu");
+                    cm.style.left = p.event.clientX + "px";
+                    cm.style.top = p.event.clientY + "px";
+                    cm.style.display = "block";
                 }
             }
-            if (p.type === BABYLON.PointerEventTypes.POINTERDOUBLETAP && pick.hit) {
-                camera.setTarget(pick.pickedMesh.position.clone());
+        }
+    }
+
+
+if (p.type === BABYLON.PointerEventTypes.POINTERDOUBLETAP) {
+	document.getElementById('followMobile').checked = false	
+    const pick = scene.pick(scene.pointerX, scene.pointerY);
+    if (pick.hit && pick.pickedPoint) {
+        const P = pick.pickedPoint.clone();
+        const h_mast = parseFloat(document.getElementById('mastSlider').value);
+        
+        // 1. STATO INIZIALE
+        const startTarget = camera.target.clone();
+        const startPosition = camera.position.clone();
+        
+        // 2. STATO FINALE (Quello che hai verificato funzionare bene)
+        const endTarget = P;
+        const endPosition = new BABYLON.Vector3(0, h_mast, 0);
+
+        // 3. SETTAGGI TRANSIZIONE
+        let duration = 45; // Numero di frame (circa 0.75s a 60fps)
+        let currentFrame = 0;
+
+        // Funzione di Easing per rendere il movimento morbido
+        const ease = new BABYLON.CubicEase();
+        ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+
+        // 4. RESET INERZIA IMMEDIATO
+        camera.inertialAlphaOffset = 0;
+        camera.inertialBetaOffset = 0;
+        camera.inertialRadiusOffset = 0;
+        camera.targetScreenOffset.x = 0;
+        camera.targetScreenOffset.y = 0;
+
+        // 5. CICLO DI ANIMAZIONE MANUALE
+        // Usiamo l'osservabile di Babylon per gestire la transizione fluida
+        const animObserver = scene.onBeforeRenderObservable.add(() => {
+            currentFrame++;
+            let progress = currentFrame / duration;
+            
+            // Applichiamo l'easing al progresso (0.0 a 1.0)
+            let easedProgress = ease.ease(progress);
+
+            // Interpolazione lineare dei vettori (LERP)
+            const currentT = BABYLON.Vector3.Lerp(startTarget, endTarget, easedProgress);
+            const currentP = BABYLON.Vector3.Lerp(startPosition, endPosition, easedProgress);
+
+            // Applichiamo i valori alla camera
+            camera.setTarget(currentT);
+            camera.setPosition(currentP);
+
+            // Fine animazione
+            if (currentFrame >= duration) {
+                scene.onBeforeRenderObservable.remove(animObserver);
+                
+                // Forza la posizione finale esatta per correggere micro-errori di arrotondamento
+                camera.setTarget(endTarget);
+                camera.setPosition(endPosition);
+                
+                console.log("Transizione completata: Camera al Mast, puntata su P.");
             }
         });
+    }
+}
+
+
+/*
+if (p.type === BABYLON.PointerEventTypes.POINTERDOUBLETAP) {
+    const pick = scene.pick(scene.pointerX, scene.pointerY);
+    if (pick.hit && pick.pickedPoint) {
+        const P = pick.pickedPoint;
+        const h_mast = parseFloat(document.getElementById('mastSlider').value);
+
+        // 1. Reset immediato dell'inerzia per fermare ogni movimento residuo
+        camera.inertialAlphaOffset = 0;
+        camera.inertialBetaOffset = 0;
+        camera.inertialRadiusOffset = 0;
+        camera.inertialPanningX = 0;
+        camera.inertialPanningY = 0;
+
+        // 2. Azzeriamo gli offset dello schermo
+        camera.targetScreenOffset.x = 0;
+        camera.targetScreenOffset.y = 0;
+
+        // 3. Eseguiamo lo spostamento "fuori" dal ciclo di eventi attuale
+        // Questo garantisce che Babylon abbia finito di processare il click
+        window.requestAnimationFrame(() => {
+            camera.setTarget(P);
+            camera.setPosition(new BABYLON.Vector3(0, h_mast, 0));
+            
+            // Un secondo reset per sicurezza dopo il posizionamento
+            camera.inertialAlphaOffset = 0;
+            camera.inertialBetaOffset = 0;
+            camera.inertialRadiusOffset = 0;
+            
+            console.log("Puntamento stabilizzato su:", P.toString());
+        });
+    }
+}
+*/
+
+
+});
 
 mobilePlane = BABYLON.MeshBuilder.CreatePlane("mobile_plane", {size: 1, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, scene);
 mobilePlane.isVisible = false; // Nascosta finché non ci sono dati
@@ -739,7 +806,7 @@ mobilePlane.material = mobileMat;
     document.getElementById('csvFile').addEventListener('change', (e) => {
         const file = e.target.files[0];
         if(!file) return;
-        document.getElementById('current-filename').innerText = file.name;
+        //document.getElementById('current-filename').innerText = file.name;
 
         const reader = new FileReader();
         reader.onload = (ev) => {
@@ -953,63 +1020,28 @@ mobilePlane.material = mobileMat;
         }
     }
 
-//     function updatePlaneGeom(plane) {
-//         const d = parseFloat(document.getElementById('distSlider').value);
-//         const s = parseFloat(document.getElementById('scaleSlider').value);
-//         const ox = parseFloat(document.getElementById('offXSlider').value);
-//         const oy = parseFloat(document.getElementById('offYSlider').value);
-//         const tx = parseFloat(document.getElementById('tiltXSlider').value) * Math.PI / 180;
-//         const tz = parseFloat(document.getElementById('tiltZSlider').value) * Math.PI / 180;
-//
-//         const m = plane.metadata;
-//         const rotMat = new BABYLON.Matrix();
-//         BABYLON.Quaternion.RotationYawPitchRoll(0, tx, tz).toRotationMatrix(rotMat);
-//
-//         // Pivot della lente con offset
-//         const pivot = BABYLON.Vector3.TransformCoordinates(
-//             new BABYLON.Vector3(ox*Math.cos(m.az)-oy*Math.sin(m.az), 0, ox*Math.sin(m.az)+oy*Math.cos(m.az)),
-//             rotMat
-//         );
-//
-//         // Direzione di puntamento ruotata
-//         const dir = BABYLON.Vector3.TransformNormal(
-//             new BABYLON.Vector3(Math.cos(m.el)*Math.sin(m.az), Math.sin(m.el), Math.cos(m.el)*Math.cos(m.az)),
-//             rotMat
-//         );
-//
-//         plane.position.copyFrom(pivot.add(dir.scale(d)));
-//
-//         // Calcolo dimensioni basato su FOV
-//         const w = 2 * d * Math.tan((m.azFOV * Math.PI / 180) / 2);
-//         const h = 2 * d * Math.tan((m.elFOV * Math.PI / 180) / 2);
-//         plane.scaling.set(w * s, h * s, 1);
-//
-//         plane.lookAt(pivot);
-//         plane.refreshBoundingInfo();
-//     }
+
 
 function updatePlaneGeom(plane) {
-console.log("[updatePlaneGeom]");
     let d = parseFloat(document.getElementById('distSlider').value);
     const s = parseFloat(document.getElementById('scaleSlider').value);
+    const h_mast = parseFloat(document.getElementById('mastSlider').value); // <-- Nuova riga
     const ox = parseFloat(document.getElementById('offXSlider').value);
     const oy = parseFloat(document.getElementById('offYSlider').value);
     const tx = parseFloat(document.getElementById('tiltXSlider').value) * Math.PI / 180;
     const tz = parseFloat(document.getElementById('tiltZSlider').value) * Math.PI / 180;
 
-    // --- NOVITÀ: Se è la tile mobile, portala leggermente più vicina (offset 2%) ---
-console.log("[updatePlaneGeom] plane=",plane, mobilePlane);
     if (plane === mobilePlane) {
         d = d * 0.96;
-console.log("[updatePlaneGeom] d=",d);
     }
 
     const m = plane.metadata;
     const rotMat = new BABYLON.Matrix();
     BABYLON.Quaternion.RotationYawPitchRoll(0, tx, tz).toRotationMatrix(rotMat);
 
+    // Usa h_mast come coordinata Y (altezza)
     const pivot = BABYLON.Vector3.TransformCoordinates(
-        new BABYLON.Vector3(ox*Math.cos(m.az)-oy*Math.sin(m.az), 0, ox*Math.sin(m.az)+oy*Math.cos(m.az)),
+        new BABYLON.Vector3(ox*Math.cos(m.az)-oy*Math.sin(m.az), h_mast, ox*Math.sin(m.az)+oy*Math.cos(m.az)),
         rotMat
     );
 
@@ -1027,6 +1059,7 @@ console.log("[updatePlaneGeom] d=",d);
     plane.lookAt(pivot);
     plane.refreshBoundingInfo();
 }
+
 
     function updateUIItemStatus(idx) {
         const m = imagePlanes[idx].metadata;
@@ -1046,7 +1079,7 @@ console.log("[updatePlaneGeom] d=",d);
     /* -------------------------------------------------------------------------
        6. INTERFACCIA E UTILITY
        ------------------------------------------------------------------------- */
-    document.getElementById('btnJpg').onclick = () => downloadMissing('jpg');
+ /*   document.getElementById('btnJpg').onclick = () => downloadMissing('jpg');
     document.getElementById('btnGif').onclick = () => downloadMissing('gif');
     document.getElementById('btnFov').onclick = async () => {
         const list = imagePlanes.filter(p => p.isEnabled() && !p.metadata.imgLoaded);
@@ -1056,20 +1089,44 @@ console.log("[updatePlaneGeom] d=",d);
             await sleep(300);
         }
     };
+*/
 
-    document.getElementById('btnReset').onclick = () => camera.setTarget(BABYLON.Vector3.Zero());
-
+/*
+document.getElementById('btnReset').onclick = () => {
+	document.getElementById('followMobile').checked = false	
+    // 1. Forza il ricalcolo delle dimensioni del canvas
+    engine.resize();
+    
+    // 2. Ripristina i valori di default della camera
+    camera.setTarget(BABYLON.Vector3.Zero());
+    camera.alpha = -Math.PI / 2; // Orientamento frontale
+    camera.beta = Math.PI / 3;  // Livello orizzontale (così il centro non cade in basso)
+    camera.radius = 30;         // Distanza standard
+    
+    // 3. Riposiziona la mobile tile se presente
+    if(mobilePlane && mobilePlane.isVisible) {
+        updatePlaneGeom(mobilePlane);
+    }
+    
+    console.log("Camera resettata e centrata sul canvas.");
+};
+*/
     // Listener per gli slider
-    document.querySelectorAll('input[type="range"]').forEach(s => {
-        s.oninput = () => {
-            const val = s.id.includes('tilt') ? s.value : (s.value*100).toFixed(1);
-            const targetId = s.id.replace('Slider', 'Val');
-            if(document.getElementById(targetId)) document.getElementById(targetId).innerText = val;
-            if(s.id === 'distSlider') document.getElementById('distVal').innerText = s.value;
-            if(s.id === 'scaleSlider') document.getElementById('scaleVal').innerText = s.value;
-            imagePlanes.forEach(updatePlaneGeom);
-        };
-    });
+document.querySelectorAll('input[type="range"]').forEach(s => {
+    s.oninput = () => {
+        const val = s.id.includes('tilt') ? s.value : (s.value*100).toFixed(1);
+        const targetId = s.id.replace('Slider', 'Val');
+        
+        if(document.getElementById(targetId)) document.getElementById(targetId).innerText = s.value; // Aggiornato per mostrare il valore reale dello slider
+
+        if(s.id === 'distSlider') document.getElementById('distVal').innerText = s.value;
+        if(s.id === 'scaleSlider') document.getElementById('scaleVal').innerText = s.value;
+        if(s.id === 'mastSlider') document.getElementById('mastVal').innerText = parseFloat(s.value).toFixed(2); // Formattazione a 2 decimali
+
+        imagePlanes.forEach(updatePlaneGeom);
+        if(mobilePlane) updatePlaneGeom(mobilePlane); // Forza aggiornamento anche della tile mobile
+    };
+});
 
     // Toggle JPG/GIF
     document.querySelectorAll('input[name="texMode"]').forEach(r => {
@@ -1102,12 +1159,531 @@ console.log("[updatePlaneGeom] d=",d);
 
 
 
+/* -------------------------------------------------------------------------
+   ESPORTAZIONE E IMPORTAZIONE GLB
+   ------------------------------------------------------------------------- */
+
+async function exportScene() {
+    const info = document.getElementById('progress-info');
+    info.innerText = "Preparazione esportazione GLB...";
+    
+    try {
+        // Opzioni di esportazione
+        const options = {
+            shouldExportNode: function (node) {
+                // Esportiamo solo le mesh (piani immagine e mobile plane)
+                // Escludiamo il terreno (ground) e le luci se necessario
+                return node.name !== "ground" && node.name !== "mobile_plane";
+            }
+        };
+
+        // Esportazione asincrona
+        const glb = await BABYLON.GLTF2Export.GLBAsync(scene, "IMP_Explorer_Scene", options);
+        
+        // Scarica il file
+        glb.downloadFiles();
+        info.innerText = "Esportazione completata.";
+    } catch (err) {
+        console.error("Errore durante l'esportazione:", err);
+        info.innerText = "Errore durante l'esportazione.";
+    }
+}
+
+function importScene(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const info = document.getElementById('progress-info');
+    info.innerText = "Importazione GLB in corso...";
+
+    // SceneLoader.Append aggiunge il contenuto al mondo esistente
+    BABYLON.SceneLoader.Append("", file, scene, function (newScene) {
+        // Una volta caricato, forziamo un refresh
+        info.innerText = "Modello GLB importato.";
+        
+        // Se vuoi che le mesh caricate siano interattive come le altre, 
+        // dovresti aggiungerle a un array dedicato, ma qui le carichiamo come oggetti statici.
+        
+        // Reset del valore dell'input per permettere ricaricamenti dello stesso file
+        event.target.value = "";
+    }, null, function (err) {
+        console.error("Errore durante l'importazione:", err);
+        info.innerText = "Errore durante l'importazione.";
+    }, ".glb");
+}
+
+
+async function preloadMetadataTab(sourceType) {
+	console.log("[preloadMetadataTab] ", sourceType);
+    const status = document.getElementById('tab-status');
+    const info = document.getElementById('progress-info');
+    let text = "";
+
+    try {
+        if (sourceType === 'url') {
+           const url = document.getElementById('tab-url').value;
+            status.innerText = "Download in corso...";
+            
+            // 1. Mostriamo la barra di progresso
+			const progressContainer = document.getElementById('preload-progress-container');
+			const progressBar = document.getElementById('preload-bar');
+			const progressText = document.getElementById('preload-count');
+			
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+            progressText.innerText = "Connessione...";
+
+            const response = await fetch(PROXY_URL + encodeURIComponent(url));
+console.log("r=",response);
+            // 2. Recuperiamo la dimensione totale dal corpo della risposta
+            const contentLength = response.headers.get('content-length');
+            const total = parseInt(contentLength, 10);
+console.log("contentLength=",contentLength);
+console.log("total=",total);
+            
+            if (!response.body) {
+                throw new Error("Il browser non supporta lo streaming della risposta.");
+            }
+
+            // 3. Leggiamo lo stream di dati
+            const reader = response.body.getReader();
+            let loaded = 0;
+            const chunks = []; // Memorizziamo i pezzi di dati scaricati
+
+            while(true) {
+                const {done, value} = await reader.read();
+                
+                if (done) break;
+
+                chunks.push(value);
+                loaded += value.length;
+
+                // Aggiorniamo la barra se conosciamo il totale
+                if (total) {
+                    const percent = Math.round((loaded / total) * 100);
+                    progressBar.style.width = percent + "%";
+                    progressText.innerText = `${(loaded / 1024 / 1024).toFixed(1)}MB / ${(total / 1024 / 1024).toFixed(1)}MB`;
+                } else {
+                    // Se il server non invia il content-length (raro ma possibile)
+                    progressText.innerText = `${(loaded / 1024 / 1024).toFixed(1)}MB scaricati...`;
+                }
+            }
+console.log("Fine: loaded=",loaded);
+
+            // 4. Uniamo i pezzi e convertiamo in testo
+            const allChunks = new Uint8Array(loaded);
+            let position = 0;
+            for (let chunk of chunks) {
+                allChunks.set(chunk, position);
+                position += chunk.length;
+            }
+            text = new TextDecoder("utf-8").decode(allChunks);
+} else {
+    const file = document.getElementById('localTabFile').files[0];
+    if (!file) return;
+
+    const progressContainer = document.getElementById('preload-progress-container');
+    const progressBar = document.getElementById('preload-bar');
+    const progressText = document.getElementById('preload-count');
+
+    progressContainer.style.display = 'block';
+    status.innerText = "Lettura file locale...";
+
+    // Usiamo FileReader per monitorare il progresso della lettura dal disco
+    text = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        
+        reader.onprogress = (e) => {
+            if (e.lengthComputable) {
+                const percent = Math.round((e.loaded / e.total) * 100);
+                progressBar.style.width = percent + "%";
+                progressText.innerText = `Caricamento disco: ${percent}%`;
+            }
+        };
+
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsText(file);
+    });
+}
+
+const lines = text.split('\n');
+const totalLines = lines.length;
+    const progressContainer = document.getElementById('preload-progress-container');
+    const progressBar = document.getElementById('preload-bar');
+    const progressText = document.getElementById('preload-count');
+
+metadataMasterMap.clear();
+let count = 0;
+
+status.innerText = "Elaborazione database...";
+progressText.innerText = "Inizio parsing...";
+
+for (let i = 0; i < totalLines; i++) {
+    const line = lines[i];
+    if (!line.trim()) continue;
+
+    // Aggiorniamo la barra ogni 2000 righe per non rallentare troppo il processo
+    if (i % 2000 === 0) {
+        const percent = Math.round((i / totalLines) * 100);
+        progressBar.style.width = percent + "%";
+        progressText.innerText = `Analisi: ${i} / ${totalLines} righe`;
+        
+        // Questo comando "yield" ferma lo script per un millesimo di secondo 
+        // permettendo alla barra di colorarsi effettivamente a schermo
+        await new Promise(r => setTimeout(r, 0)); 
+    }
+
+    const fields = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+
+    if (fields && fields.length >= 22) {
+        let rawName = fields[6].replace(/"/g, '').trim().toLowerCase();
+        let fileName = rawName.split('.')[0];
+        
+        let az = parseFloat(fields[58]);
+        let el = parseFloat(fields[59]);
+        let timestampStr = fields[22].replace(/"/g, '').trim();
+        let sol = fields[42].replace(/"/g, '').trim();
+        let MPMarchive = fields[4].replace(/"/g, '').trim().toLowerCase();
+        let imagePath = fields[5].replace(/"/g, '').trim().toLowerCase();
+		let uniqueKey = MPMarchive + "/browse/" + imagePath.split('.')[0] + "" + fileName; 
+
+        if (!isNaN(az) && !isNaN(el)) {
+            metadataMasterMap.set(uniqueKey, { 
+                az: az, 
+                el: el,  
+                time: new Date(timestampStr).getTime(),
+                timestamp: timestampStr,
+                sol: sol,
+                relImagePath: (MPMarchive + "/browse/" + imagePath).toLowerCase()
+            });
+            count++;
+        }
+    }
+}
+
+// Fine processo
+progressContainer.style.display = 'none';
+status.innerText = `Database pronto: ${count} record`;
+        
+        status.innerText = `Database pronto: ${count} immagini`;
+        info.innerText = `TAB caricato con ${count} record.`;
+        console.log("Database TAB popolato. Esempio:", metadataMasterMap.entries().next().value);
+    } catch (e) {
+        status.innerText = "ERRORE CARICAMENTO";
+        console.error(e);
+    }
+}
+
+async function exportToZip() {
+    if (scrapedData.length === 0) return alert("Nessun dato da esportare.");
+    const zip = new JSZip();
+    const info = document.getElementById('progress-info');
+    info.innerText = "Preparazione metadati e immagini...";
+
+    // Creiamo un array pulito di soli metadati da salvare nel JSON
+    const metadataIndex = [];
+
+    scrapedData.forEach(item => {
+        if (item.blob) {
+            const fileName = item.name + ".gif";
+            zip.file(fileName, item.blob);
+            
+			metadataIndex.push({
+				name: item.name,
+				az: item.az,
+				el: item.el,
+				time: item.time,
+				timestamp: item.timestamp,
+				sol: item.sol,
+				fileName: fileName,
+				imgUrl: item.imgUrl.replace("gif","htm"), 
+				imgUrl2: item.imgUrl
+			});
+        }
+    });
+
+    // Salviamo l'indice dei metadati come file JSON nello ZIP
+    zip.file("metadata.json", JSON.stringify(metadataIndex, null, 4));
+
+    const content = await zip.generateAsync({type:"blob"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(content);
+    link.download = "IMP_Mobile_Sequence.zip";
+    link.click();
+    info.innerText = "ZIP completo esportato.";
+}
+
+
+async function importFromZip(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const info = document.getElementById('progress-info');
+    // 1. Recuperiamo gli elementi della barra di progresso
+    const progressContainer = document.getElementById('preload-progress-container');
+    const progressBar = document.getElementById('preload-bar');
+    const progressText = document.getElementById('preload-count');
+
+    info.innerText = "Lettura archivio...";
+
+    try {
+        const zip = await JSZip.loadAsync(file);
+        const metaFile = zip.file("metadata.json");
+        
+        if (!metaFile) {
+            alert("Questo ZIP non contiene i metadati necessari (metadata.json).");
+            return;
+        }
+
+        const metadataIndex = JSON.parse(await metaFile.async("string"));
+        const newItems =[];
+
+        // 2. Mostriamo la barra di progresso
+        progressContainer.style.display = 'block';
+        // Forza la comparsa del pannello laterale (se era nascosto) per far vedere la barra
+        //document.getElementById('ui-controls').style.display = 'block';
+
+        // 3. Cicliamo usando un indice (i) per calcolare la percentuale
+        for (let i = 0; i < metadataIndex.length; i++) {
+            const entry = metadataIndex[i];
+            
+            // Aggiorniamo l'interfaccia UI
+            progressText.innerText = `${i + 1} / ${metadataIndex.length}`;
+            progressBar.style.width = `${((i + 1) / metadataIndex.length) * 100}%`;
+            info.innerText = `Estrazione: ${entry.fileName}`;
+
+            const imgFile = zip.file(entry.fileName);
+            if (!imgFile) continue;
+
+            const blob = await imgFile.async("blob");
+            
+            // Caricamento texture Babylon
+            const tex = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const t = new BABYLON.Texture(reader.result, scene, false, true, BABYLON.Texture.TRILINEAR_SAMPLINGMODE, () => {
+                        t.uScale = -1; t.uOffset = 1; t.hasAlpha = true;
+                        resolve(t);
+                    }, null, null, false, null, ".gif");
+                };
+                reader.readAsDataURL(blob);
+            });
+
+            mobileTextureCache.set(entry.fileName, tex);
+
+            newItems.push({
+                name: entry.name,
+                az: entry.az,
+                el: entry.el,
+                time: entry.time,
+                timestamp: entry.timestamp,
+                sol: entry.sol,
+                imgUrl: entry.fileName, 
+                blob: blob,
+				imgUrl2: entry.relImagePath
+            });
+
+            // Piccolo delay opzionale per far "respirare" il browser e aggiornare la barra grafica fluidamente
+            if (i % 3 === 0) await new Promise(r => setTimeout(r, 5));
+        }
+
+        // Uniamo i dati
+        const existingNames = new Set(scrapedData.map(d => d.name));
+        const filteredNewItems = newItems.filter(item => !existingNames.has(item.name));
+        
+        scrapedData =[...scrapedData, ...filteredNewItems];
+        scrapedData.sort((a, b) => a.time - b.time);
+
+        setupMobileSlider();
+        info.innerText = `Importati ${filteredNewItems.length} nuovi fotogrammi. Totale: ${scrapedData.length}`;
+
+    } catch (err) {
+        console.error(err);
+        alert("Errore durante l'importazione dello ZIP.");
+    } finally {
+        event.target.value = "";
+        // 4. Nascondiamo la barra di progresso alla fine
+        progressContainer.style.display = 'none';
+    }
+}
+
+document.getElementById('followMobile').addEventListener('change', function() {
+    if (this.checked && mobilePlane && mobilePlane.isVisible) {
+        // Se l'utente attiva follow, usiamo la tecnica della transizione fluida
+        // per inquadrare la tile mobile dalla posizione attuale della camera
+        
+        const P = mobilePlane.position.clone();
+        const h_mast = parseFloat(document.getElementById('mastSlider').value);
+        
+        const startTarget = camera.target.clone();
+        const startPosition = camera.position.clone();
+        const endTarget = P;
+        const endPosition = new BABYLON.Vector3(0, h_mast, 0);
+
+        let duration = 30; // Un po' più veloce del doppio click
+        let currentFrame = 0;
+        const ease = new BABYLON.CubicEase();
+        ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+
+        const animObserver = scene.onBeforeRenderObservable.add(() => {
+    const followCheckbox = document.getElementById('followMobile');
+    
+    if (followCheckbox && followCheckbox.checked && mobilePlane && mobilePlane.isVisible) {
+        const h_mast = parseFloat(document.getElementById('mastSlider').value);
+        const targetPos = mobilePlane.position;
+        const mastPos = new BABYLON.Vector3(0, h_mast, 0);
+
+        // Fattore di morbidezza: 0.1 è molto fluido, 1.0 è istantaneo (a scatti)
+        // Prova 0.1 per un effetto cinematico
+        const lerpFactor = 0.1; 
+
+        // 1. Inseguiamo il Target (la tile) con LERP
+        camera.setTarget(BABYLON.Vector3.Lerp(camera.target, targetPos, lerpFactor));
+
+        // 2. Inseguiamo la posizione (il Mast) con LERP
+        // (Serve se l'utente muove lo slider dell'altezza mentre è in follow)
+        camera.setPosition(BABYLON.Vector3.Lerp(camera.position, mastPos, lerpFactor));
+
+        // 3. Pulizia inerzia per evitare derive
+        camera.inertialAlphaOffset = 0;
+        camera.inertialBetaOffset = 0;
+        camera.inertialRadiusOffset = 0;
+    }
+});
+    }
+});
+
+/**
+ * Mostra o nasconde il pannello dei controlli (slider e scraping)
+ */
+function toggleAdjustments() {
+    const panel = document.getElementById('ui-controls');
+    if (panel.style.display === 'none' || panel.style.display === '') {
+        panel.style.display = 'block';
+        document.getElementById('progress-info').innerText = "Modalità regolazione attiva.";
+    } else {
+        panel.style.display = 'none';
+        document.getElementById('progress-info').innerText = "Regolazioni nascoste.";
+    }
+}
+
+
+
+function showHelp(topic) {
+    const helpData = {
+        'panorama': {
+            title: "Guida: CSV Panorama",
+            text: `Il file CSV è il cuore del sistema di tassellazione del terreno. 
+            Deve contenere i percorsi delle immagini (PATH_NAME), i nomi file (FILE_NAME) e le coordinate strumentali (AZIMUTH/ELEVATION).
+            
+            Ogni riga del file genera una "tile" 3D posizionata nello spazio sferico del lander. 
+            Il sistema supporta la modalità 'Replace' (sostituisce tutto il panorama attuale) o 'Append' (aggiunge nuove foto a quelle esistenti).
+            
+            È fondamentale che i nomi delle colonne corrispondano esattamente a quelli previsti dal parser (es: SURFACE_BASED_INST_AZIMUTH). 
+            Se le foto appaiono sovrapposte o distorte, verifica che l'azimuth nel CSV sia espresso in gradi decimali.`
+        },
+        'tab': {
+            title: "Guida: File .TAB (Metadati)",
+            text: `I file .TAB sono database ufficiali NASA PDS che contengono i metadati grezzi di ogni immagine scattata.
+            Questi file sono essenziali per le animazioni del rover poiché contengono due dati non presenti nei semplici file JPG:
+            1) Il Timestamp (campo 23): l'ora esatta dello scatto, usata per ordinare cronologicamente i fotogrammi.
+            2) Il Sol (campo 43): il giorno marziano della missione.
+            
+            Senza caricare un file .TAB (da URL o locale), il sistema non può associare una posizione Az/El corretta alle sequenze video del rover scoperte tramite scraping. 
+            Il database viene caricato in una 'Master Map' in memoria per un accesso istantaneo durante la navigazione.`
+        },
+        'JPG': {
+            title: "Guida: Texture Terreno",
+            text: `Il sistema gestisce due tipi di texture per il panorama: JPG e GIF.
+            Le JPG sono generalmente più leggere e adatte per una navigazione fluida del terreno statico.
+            Le GIF (se disponibili sul server PDS) possono contenere dettagli diversi o compressioni alternative.
+            
+            Puoi switchare tra le due modalità dal menu 'Visualizza'. 
+            Se una tile appare rossa, significa che la texture non è stata ancora scaricata o il link è interrotto. 
+            Usa il comando 'Scarica tutte le JPG/GIF' dal menu Sviluppo per popolare il panorama massivamente. 
+            Le immagini vengono caricate tramite un proxy per superare le restrizioni di sicurezza (CORS) dei browser moderni.`
+        },
+        'FOV': {
+            title: "Guida: Dati FOV (Field of View)",
+            text: `Il FOV (Campo Visivo) determina la dimensione reale di ogni foto nel mondo 3D.
+            Di default, il sistema assegna un FOV standard (14°), ma per un allineamento perfetto è necessario scaricare i dati reali.
+            
+            Cliccando su 'Scarica tutti i FOV', il sistema scarica il file .IMG (etichetta testuale) di ogni tile e cerca le chiavi AZIMUTH_FOV ed ELEVATION_FOV.
+            Una volta ottenuti questi valori, le tile vengono ridimensionate automaticamente. 
+            
+            Questo risolve i problemi di "buchi" nel panorama o di eccessiva sovrapposizione delle immagini, garantendo che la scala angolare corrisponda esattamente all'ottica della Mastcam.`
+        },
+        'video': {
+            title: "Guida: Sequenze Rover",
+            text: `Le sequenze video del rover vengono create tramite 'Scraping' del sito NASA PDS o importando uno ZIP dedicato.
+            Il sistema cerca file .htm che descrivono le osservazioni del rover, ne estrae le immagini GIF e le incrocia con il database .TAB caricato.
+            
+            Una volta elaborata la sequenza, compare uno slider 'Mobile Tile'. Muovendolo, puoi vedere il movimento del rover nel tempo.
+            La funzione 'Follow' aggancia la camera alla tile mobile, permettendoti di osservare il panorama come se fossi a bordo del Mastcam.
+            
+            Puoi esportare l'intera sequenza (immagini + metadati) in un file ZIP auto-consistente. Questo file potrà essere ricaricato in futuro senza dover rifare lo scraping o ricaricare il file .TAB.`
+        }
+    };
+
+    const data = helpData[topic];
+    if (data) {
+        document.getElementById('helpTitle').innerText = data.title;
+        document.getElementById('helpBody').innerText = data.text;
+        document.getElementById('helpModal').style.display = 'flex';
+    }
+}
+
+function closeHelp(event) {
+    if (event.target.id === 'helpModal') {
+        document.getElementById('helpModal').style.display = 'none';
+    }
+}
+
+
+
+function toggleSection(containerId) {
+    const container = document.getElementById(containerId);
+    container.classList.toggle('collapsed');
+    
+    // Forza il ricalcolo del layout per Babylon (opzionale)
+    setTimeout(() => { engine.resize(); }, 350);
+}
+
+
+
+// Assicurati che all'avvio le statistiche siano aggiornate 
+// e che il pannello sia effettivamente chiuso.
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('ui-controls').style.display = 'none';
+	document.getElementById('tab-url').value = SERVER_DATASET + document.getElementById('tab-url').value
+	document.getElementById('scrape-url').value = SERVER_DATASET + document.getElementById('scrape-url').value
+});
+
+
+
 
     document.getElementById("contextMenu").addEventListener("click", hideCM);
 
     // Avvio Motore
     scene = createScene();
-    engine.runRenderLoop(() => scene.render());
+// Forza il ridimensionamento immediato
+engine.resize();
+
+// Un secondo resize dopo che il DOM è completamente renderizzato aiuta a centrare tutto
+setTimeout(() => {
+    engine.resize();
+    camera.setTarget(BABYLON.Vector3.Zero());
+}, 100);
+
+engine.runRenderLoop(() => {
+    scene.render();
+});
+
+// Gestione fondamentale del ridimensionamento finestra
+window.addEventListener("resize", () => {
+    engine.resize();
+});
 </script>
 </body>
 </html>
