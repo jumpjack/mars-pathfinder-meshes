@@ -328,6 +328,8 @@ body {
     flex: 0 0 auto !important; /* Impedisce alla sezione chiusa di prendere spazio */
 }
 
+
+
 .section-container.collapsed .section-title::after {
     transform: rotate(-90deg);
 }
@@ -345,6 +347,10 @@ body {
     border-bottom: 1px solid #adb5bd;
 }
 
+.section-container.collapsed > *:not(.section-title) {
+    display: none !important;
+}
+
 /* Rimuovi flex: 1 dai vecchi ID e usali solo per lo scroll */
 #ui-controls, #list-container {
     flex: 1;
@@ -352,3 +358,66 @@ body {
     min-height: 0;
 }
 
+/* Container principale dello scraping */
+.scraping-inputs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 11px;
+}
+
+/* Riga singola: allinea label, input e bottoni */
+.scraping-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Label con larghezza fissa per allineare gli input */
+.scraping-row label {
+    white-space: nowrap;
+    min-width: 125px; /* Regola in base alla lunghezza del testo */
+    color: #333;
+}
+
+/* Input e Select prendono lo spazio rimanente */
+.scraping-row input, 
+.scraping-row select {
+    flex-grow: 1;
+    height: 24px;
+    padding: 2px 5px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: 11px;
+}
+
+/* Pulsanti quadrati come da figura */
+.scraping-btn {
+    width: 28px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e9ecef;
+    border: 1px solid #adb5bd;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px; /* Per i simboli ⇩ ⇧ ☆ */
+    font-weight: bold;
+    color: #495057;
+    transition: all 0.2s;
+}
+
+.scraping-btn:hover {
+    background: #dee2e6;
+    border-color: #868e96;
+}
+
+/* Messaggio di stato TAB sotto la prima riga */
+.status-msg {
+    font-size: 9px;
+    color: var(--danger);
+    margin-left: 129px; /* Allineato con l'inizio dell'input */
+    margin-top: -2px;
+    margin-bottom: 5px;
+}
