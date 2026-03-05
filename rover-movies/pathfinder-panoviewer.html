@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMP Explorer v1.3.0</title>
+    <title>Mars Pathfinder/Sojourner panorama and video viewer</title>
  <link rel="stylesheet" href="pathfinder-panoviewer.css">	
     <script src="babylon.js"></script>
     <script src="babylonjs.materials.min.js"></script>
@@ -23,46 +23,45 @@
 
 <!-- BARRA DEI MENU -->
 <nav id="navbar">
-    <div class="menu-item">📁 File
+    <div data-i18n="menu-file" class="menu-item">📁 File
         <div class="dropdown">
-            <div onclick="document.getElementById('importGlbFile').click()">📥 Carica terreno</div>
+            <div  data-i18n="menu-file-terrain" onclick="document.getElementById('importGlbFile').click()">📥 Carica terreno</div>
             <hr>
-            <div onclick="document.getElementById('importZipFile').click()">📦 Carica animazione rover</div>
+            <div  data-i18n="menu-file-rover" onclick="document.getElementById('importZipFile').click()">📦 Carica animazione rover</div>
         </div>
     </div>
     
-    <div class="menu-item">🔍 Visualizza
+    <div  data-i18n="menu-view" class="menu-item">🔍 Visualizza
         <div class="dropdown">
-            <label><input type="radio" name="texMode" value="jpg" checked onchange="viewMode='jpg'; imagePlanes.forEach(updateMaterial)"> Terreno JPG</label>
-            <label><input type="radio" name="texMode" value="gif" onchange="viewMode='gif'; imagePlanes.forEach(updateMaterial)"> Terreno GIF</label>
-        </div>
-    </div>
-
-    <div class="menu-item">⚡ Azioni
-        <div class="dropdown">
+            <label><input  data-i18n="menu-view-jpg" type="radio" name="texMode" value="jpg" checked onchange="viewMode='jpg'; imagePlanes.forEach(updateMaterial)"> Terreno JPG</label>
+            <label><input  data-i18n="menu-view-gif" type="radio" name="texMode" value="gif" onchange="viewMode='gif'; imagePlanes.forEach(updateMaterial)"> Terreno GIF</label>
             <div onclick="resetCameraCustom()">🔄 Reset Camera</div>
         </div>
     </div>
+
 	
-<div class="menu-item">  Sviluppo
+<div  data-i18n="menu-developer" class="menu-item">  Sviluppo
     <div class="dropdown">
         <!-- AGGIUNTO: Comando per mostrare gli slider -->
-        <div onclick="toggleAdjustments()" style="font-weight: bold; color: var(--primary);">⚙️ Pannello di controllo</div>
+        <div   data-i18n="menu-developer-controlpanel" onclick="toggleAdjustments()" style="font-weight: bold; color: var(--primary);">⚙️ Pannello di controllo</div>
         <hr>
 		<div>Panorama</div>
-        <div onclick="openFilePicker('replace')">📂 Carica da CSV</div>
-        <div onclick="openFilePicker('append')">➕ Aggiungi da CSV</div>
-        <div onclick="downloadMissing('jpg')">🖼️ Scarica tutte le JPG</div>
-        <div onclick="downloadMissing('gif')">🎞️ Scarica tutte le GIF</div>
-        <div onclick="downloadMissingFOV()">📏 Scarica tutti i FOV (IMG)</div>
-        <div onclick="exportScene()">📤 Esporta terreno</div>
+        <div  data-i18n="menu-developer-csvLoad" onclick="openFilePicker('replace')">📂 Carica da CSV</div>
+        <div  data-i18n="menu-developer-csvAppend" onclick="openFilePicker('append')">➕ Aggiungi da CSV</div>
+        <div  data-i18n="menu-developer-jpg" onclick="downloadMissing('jpg')">🖼️ Scarica tutte le JPG</div>
+        <div  data-i18n="menu-developer-gif" onclick="downloadMissing('gif')">🎞️ Scarica tutte le GIF</div>
+        <div  data-i18n="menu-developer-fov" onclick="downloadMissingFOV()">📏 Scarica tutti i FOV (IMG)</div>     
         <hr>
-		<div>Animazione rover</div>
-        <div onclick="preloadMetadataTab('url')">🌐 Scarica edrindex.tab da URL</div>
-        <div onclick="document.getElementById('localTabFile').click()">📂 Carica edrindex.tab locale</div>
-        <div onclick="fetchIndex()">🌐 Scarica elenco sequenze</div>
-        <div onclick="fetchSubPage()">🎬 Elabora sequenza selezionata</div>
-        <div onclick="exportToZip()">📦 Esporta animazione rover</div>
+<!--        <div  data-i18n="menu-developer-tabDN" onclick="preloadMetadataTab('url')">🌐 Scarica edrindex.tab da URL</div>
+        <div  data-i18n="menu-developer-tabUp" onclick="document.getElementById('localTabFile').click()">📂 Carica edrindex.tab locale</div>
+        <div data-i18n="menu-developerDNseq"  onclick="fetchIndex()">🌐 Scarica elenco sequenze</div>
+        <div data-i18n="menu-developer-process"  onclick="fetchSubPage()">🎬 Elabora sequenza selezionata</div>
+-->		
+        
+		<div data-i18n="menu-export-label" >Esporta risultati</div>
+		<div  data-i18n="menu-developer-export-terrain" onclick="exportScene()">📤 Esporta terreno</div>
+		<div  data-i18n="menu-developer-export-video" onclick="exportToZip()">📦 Esporta animazione rover</div>		
+<!--		
 		<hr>
 		<div style="font-weight:bold; padding-bottom:2px;">Filtri:</div>
 		<div>L/R: <select id="filter-lr" onchange="applyFilters()"></select></div>
@@ -70,29 +69,34 @@
 		<div>Sol: <select id="filter-sol" onchange="applyFilters()"></select></div>
 		<div>S: <select id="filter-s" onchange="applyFilters()"></select></div>
         <hr>
+-->		
     </div>
 </div>
 
-    <div class="menu-item">  Guida
+<div class="menu-item">🌐 Lingua
+    <div class="dropdown">
+        <div onclick="changeLanguage('it')">Italiano</div>
+        <div onclick="changeLanguage('en')">English</div>
+    </div>
+</div>
+
+    <div  data-i18n="menu-help" class="menu-item">  Guida
         <div class="dropdown">
-            <div onclick="showHelp('panorama')">CSV panorama</div>
-            <div onclick="showHelp('tab')">file .TAB</div>
-            <div onclick="showHelp('JPG')">GIF/JPG terreno</div>
-            <div onclick="showHelp('FOV')">FOV terreno</div>
-            <div onclick="showHelp('video')">Sequenze video rover</div>
+            <div  data-i18n="menu-help-csv" onclick="showHelp('panorama')">Panorama: file CSV</div>
+            <div  data-i18n="menu-help-jpg" onclick="showHelp('JPG')">Panorama: GIF/JPG terreno</div>
+            <div  data-i18n="menu-help-fov" onclick="showHelp('FOV')">Panorama: FOV terreno</div>
+            <div  data-i18n="menu-help-videoLoad" onclick="showHelp('videoPlay')">Video rover: caricamento</div>
+            <div  data-i18n="menu-help-videoCreate" onclick="showHelp('videoCreate')">Video rover: creazione</div>
+            <div  data-i18n="menu-help-tab" onclick="showHelp('tab')">Video rover: File .TAB</div>
        </div>
     </div>
 	
 </nav>
 
 <div id="main-container">
+
     <div id="sidebar">
-        <!-- Statistiche -->
-        <div id="stats-header">
-            <div class="stat-card"><label>Visibili</label><span id="stat-total">0/0</span></div>
-            <div class="stat-card"><label>Tex OK</label><span id="stat-tex">0</span></div>
-            <div class="stat-card"><label>IMG OK</label><span id="stat-img">0</span></div>
-        </div>
+<h3 id="main-title">Mars Pathfinder panorama and video viewer</h3>
 
 		<!-- BARRA DI PROGRESSO PRECARICAMENTO -->
 		<div id="preload-progress-container" style="display:none; margin-top:10px; background:#fff; padding:5px; border-radius:3px; border:1px solid #ccc;">
@@ -122,74 +126,100 @@
 			
         <!-- Controlli -->
         <div id="ui-controls" >
-			<div class="section-container" id="section-rover">
-				<div class="section-title" onclick="toggleSection('section-rover')">Animazione Rover</div>
-				<div class="section-content" style="padding: 10px; background: #fff;">			
-					<div class="scraping-inputs" style="font-size:11px;">
-						Tabella metadati immagini:
-						<input type="text" id="tab-url" value= "mpim_0003/index/edrindex.tab">
-						<div id="tab-status" style="font-size:9px; color:var(--danger); margin-top:2px;">TAB non caricato</div><br>
-						Indice sequenze:
-						<input type="text" id="scrape-url" value= "/mpim_0002/browse/rover/index.htm">
-						Squenze disponibili in indice selezionato:
-						<select id="sub-page-list" style="width:100%"><option>Nessun indice</option></select>
-					</div>			
-				</div>
-			</div>
+
+<div class="section-container" id="section-rover">
+    <div class="section-title" onclick="toggleSection('section-rover')">Animazione Rover</div>
+    <div class="section-content" style="padding: 10px; background: #fff;">			
+        <div class="scraping-inputs-container">
+            
+            <!-- RIGA 1: Metadati -->
+            <div class="scraping-row">
+                <label id="label-tab"  for="tab-url">1) Tabella metadati:</label>
+                <input itype="text" id="tab-url" value="mpim_0003/index/edrindex.tab">
+                <button onclick="preloadMetadataTab('url')" class="scraping-btn" title="Scarica da URL">⇩</button>
+                <button onclick="document.getElementById('localTabFile').click()" class="scraping-btn" title="Carica file locale">⇧</button>
+            </div>
+            <div id="tab-status" class="status-msg">TAB non caricato</div>
+
+            <!-- RIGA 2: Indice -->
+            <div class="scraping-row">
+                <label d="label-index" for="scrape-url">2) Indice sequenze:</label>
+                <input type="text" id="scrape-url" value="/mpim_0002/browse/rover/index.htm">
+                <button onclick="fetchIndex()" class="scraping-btn" title="Scarica indice">⇩</button>
+            </div>
+
+            <!-- RIGA 3: Sequenze -->
+            <div class="scraping-row">
+                <label id="label-avail" for="sub-page-list">3) Sequenze disponibili:</label>
+                <select id="sub-page-list"><option>Nessun indice</option></select>
+                <button onclick="fetchSubPage()" class="scraping-btn" title="Elabora sequenza">☆</button>
+            </div>
+
+        </div> <!-- scraping-inputs-container -->
+    </div>
+</div>
 
 
-		   <!-- SEZIONE 2: REGOLAZIONI PANORAMA -->
-			<div class="section-container" id="section-settings">
-				<div class="section-title" onclick="toggleSection('section-settings')">Regolazioni Panorama</div>
-				<div class="section-content" id="test">
-					<div class="slider-section">
-						<div class="slider-grid">
+<!-- SEZIONE 2: REGOLAZIONI PANORAMA -->
+		<div class="section-container" id="section-settings">
+			<div class="section-title" onclick="toggleSection('section-settings')">Regolazioni Panorama</div>
+			<div class="section-content" id="test">
+				<div class="slider-section">
+					<div class="slider-grid">
+					
+						<!-- Colonna Sinistra -->
+						<div class="slider-col">
+							<div class="control-group">
+								<label data-i18n="label-radius" >Raggio sfera: <span id="distVal">15</span>m</label>
+								<input type="range" id="distSlider" min="1" max="100" step="0.5" value="15">
+							</div>
+							<div class="control-group">
+								<label data-i18n="label-scale">Dimensione tile: <span id="scaleVal">1.0</span></label>
+								<input type="range" id="scaleSlider" min="0.1" max="5" step="0.1" value="1.0">
+							</div>
+						</div>
+
+						<!-- Colonna Destra -->
+						<div class="slider-col">
+							<div class="control-group">
+								<label data-i18n="label-height">Altezza camera: <span id="mastVal">0.00</span>m</label>
+								<input type="range" id="mastSlider" min="-3" max="2" step="0.01" value="0">
+							</div>
+							<div class="control-group">
+								<label>Offset X: <span id="offXVal">0</span></label>
+								<input type="range" id="offXSlider" min="-0.2" max="0.2" step="0.001" value="0">
+							</div>
+							<div class="control-group">
+								<label>Offset Y: <span id="offYVal">0</span></label>
+								<input type="range" id="offYSlider" min="-0.2" max="0.2" step="0.001" value="0">
+							</div>
+							<div class="control-group">
+								<label>Tilt X: <span id="tiltXVal">0</span>°</label>
+								<input type="range" id="tiltXSlider" min="-15" max="15" step="0.1" value="0">
+							</div>
+							<div class="control-group">
+								<label>Tilt Z: <span id="tiltZVal">0</span>°</label>
+								<input type="range" id="tiltZSlider" min="-15" max="15" step="0.1" value="0">
+							</div>
+						</div>
 						
-							<!-- Colonna Sinistra -->
-							<div class="slider-col">
-								<div class="control-group">
-									<label>Raggio sfera: <span id="distVal">15</span>m</label>
-									<input type="range" id="distSlider" min="1" max="100" step="0.5" value="15">
-								</div>
-								<div class="control-group">
-									<label>Dimensione tile: <span id="scaleVal">1.0</span></label>
-									<input type="range" id="scaleSlider" min="0.1" max="5" step="0.1" value="1.0">
-								</div>
-							</div>
-
-							<!-- Colonna Destra -->
-							<div class="slider-col">
-								<div class="control-group">
-									<label>Altezza camera: <span id="mastVal">0.00</span>m</label>
-									<input type="range" id="mastSlider" min="-3" max="2" step="0.01" value="0">
-								</div>
-								<div class="control-group">
-									<label>Offset X: <span id="offXVal">0</span></label>
-									<input type="range" id="offXSlider" min="-0.2" max="0.2" step="0.001" value="0">
-								</div>
-								<div class="control-group">
-									<label>Offset Y: <span id="offYVal">0</span></label>
-									<input type="range" id="offYSlider" min="-0.2" max="0.2" step="0.001" value="0">
-								</div>
-								<div class="control-group">
-									<label>Tilt X: <span id="tiltXVal">0</span>°</label>
-									<input type="range" id="tiltXSlider" min="-15" max="15" step="0.1" value="0">
-								</div>
-								<div class="control-group">
-									<label>Tilt Z: <span id="tiltZVal">0</span>°</label>
-									<input type="range" id="tiltZSlider" min="-15" max="15" step="0.1" value="0">
-								</div>
-							</div>
-							
-						</div> <!-- slider-grid -->
-					</div> <!-- slider-section -->
-				</div> <!-- section-content -->
-			</div> <!-- section-container -->
+					</div> <!-- slider-grid -->
+				</div> <!-- slider-section -->
+			</div> <!-- section-content -->
+		</div> <!-- section-container -->
+		
 
 				
 			<!-- SEZIONE 3: ELENCO IMMAGINI -->
+			
 			<div class="section-container" id="section-list">
-				<div class="section-title" onclick="toggleSection('section-list')">Elenco Immagini</div>
+				<div data-i18n="label-list" class="section-title" onclick="toggleSection('section-list')">Elenco Immagini</div>
+				<!-- Statistiche -->
+				<div id="stats-header">
+					<div  data-i18n="label-visible" class="stat-card"><label>Visibili</label><span id="stat-total">0/0</span></div>
+					<div class="stat-card"><label>Tex OK</label><span id="stat-tex">0</span></div>
+					<div class="stat-card"><label>IMG OK</label><span id="stat-img">0</span></div>
+				</div>				
 				<div class="section-content" id="list-container">
 					Nessun panorama caricato
 				</div> <!-- section-content -->
@@ -235,6 +265,123 @@ CSV format:
 
 
 */
+
+const helpTranslations = {
+    it: {
+        'panorama': {
+            title: "Guida: CSV Panorama",
+            text: `I file <a href="https://github.com/jumpjack/mars-pathfinder-meshes/tree/main/rover-movies">CSV</a> sono stati ottenuti a partire dagli <a href="https://planetarydata.jpl.nasa.gov/img/data/mpf/imp/mpim_0002/browse/mars/index.htm">elenchi di panorami</a> e dalla 
+			<a href="https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0003/index/">tabella dei prodotti</a>. 
+            Ogni file CSV deve contenere le seguenti colonne:
+			"PATH_NAME","FILE_NAME","IMAGE_OBSERVATION_TYPE","FRAME_ID",
+			"FILTER_NAME","FILTER_NUMBER","PLANET_DAY_NUMBER",
+			"SURFACE_BASED_INST_AZIMUTH","SURFACE_BASED_INST_ELEVATION",
+			"BROWSE".            
+            Ogni riga del file genera una "tile" 3D posizionata nello spazio sferico del lander. 
+            Il sistema supporta la modalità 'Replace' o 'Append'.`
+        },
+        'JPG': {
+            title: "Guida: Texture Terreno",
+            text: `Una volta caricate le tile del panorama, è necessario caricare le relative 
+			texture, disponibili in formato JPG o GIF. Le JPG avevano senso nel 1997 con 
+			connessioni lente; con una connessione moderna si possono scaricare le texture GIF in poco tempo.           
+            Puoi switchare tra le due tipologie texture dal menu 'Visualizza'. 
+            Se una tile appare rossa, significa che la texture non è stata ancora scaricata 
+			o il link è interrotto. 
+            Usa il comando 'Scarica tutte le JPG/GIF' dal menu Sviluppo.`
+        },
+        'FOV': {
+            title: "Guida: Dati FOV (Field of View)",
+            text: `Il FOV determina la dimensione reale di ogni foto nel mondo 3D.
+            Di default, il sistema assegna 14°, ma per un allineamento perfetto è necessario scaricare i dati reali.
+            Cliccando su 'Scarica tutti i FOV', il sistema scarica il file .IMG di ogni tile e cerca le chiavi AZIMUTH_FOV ed ELEVATION_FOV.
+            Questo risolve i problemi di "buchi" nel panorama o di sovrapposizione.`
+        },
+        'videoPlay': {
+            title: "Guida: Caricamento video già pronto",
+            text: `È possibile caricare da locale un file .zip contenente tutte le informazioni 
+			necessarie per visualizzare immediatamente un filmato, oppure scaricare manualmente
+			i dataset desiderati e procedere a creare un nuovo video.`
+        },
+        'videoCreate': {
+            title: "Guida: Creazione video",
+            text: `È possibile creare un nuovo video scaricando i dataset desiderati dal menu "Sviluppo":
+			 1) Tabella metadati (edrindex.tab);
+			 2) Indice delle sequenze (pagine HTML <a href="https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0001/browse/rover/index.htm">1</a>, <a href="https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0002/browse/rover/index.htm">2</a>, <a href="https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0003/browse/rover/index.htm">3</a>);
+			 3) Elaborazione della sequenza desiderata.            
+            La funzione 'Follow' aggancia la camera alla tile mobile, osservando il panorama dal punto di vista del lander.
+			Puoi esportare l'intera sequenza in un file ZIP auto-consistente.`
+        },
+        'tab': {
+            title: "Guida: File .TAB (Metadati)",
+            text: `I <a href="https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0003/index/">file .TAB</a> sono database ufficiali NASA PDS con i metadati grezzi.
+            Essenziali per:
+            1) Timestamp: ora esatta dello scatto;
+            2) Sol: giorno marziano;
+			3) Direzione di puntamento o orientamento del rover.
+            Senza caricare un file .TAB, il sistema non può associare una posizione Az/El corretta alle sequenze.`
+        }
+    },
+    en: {
+        'panorama': {
+            title: "Guide: Panorama CSV",
+            text: `<a href="https://github.com/jumpjack/mars-pathfinder-meshes/tree/main/rover-movies">CSV</a> files were obtained from <a href="https://planetarydata.jpl.nasa.gov/img/data/mpf/imp/mpim_0002/browse/mars/index.htm">panorama lists</a> and the 
+			<a href="https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0003/index/">product tables</a>. 
+            Each CSV file must contain the following columns:
+			"PATH_NAME","FILE_NAME","IMAGE_OBSERVATION_TYPE","FRAME_ID",
+			"FILTER_NAME","FILTER_NUMBER","PLANET_DAY_NUMBER",
+			"SURFACE_BASED_INST_AZIMUTH","SURFACE_BASED_INST_ELEVATION",
+			"BROWSE".            
+            Each row generates a 3D "tile" positioned in the lander's spherical space. 
+            The system supports 'Replace' or 'Append' mode.`
+        },
+        'JPG': {
+            title: "Guide: Terrain Textures",
+            text: `Once the panorama tiles are loaded, you need to load the textures (JPG or GIF). 
+            JPGs were useful in 1997 with slow connections; with a modern connection, GIF textures can be downloaded quickly.           
+            You can switch between texture types from the 'View' menu. 
+            If a tile appears red, the texture is not yet downloaded or the link is broken. 
+            Use 'Download all JPG/GIF' from the Development menu.`
+        },
+        'FOV': {
+            title: "Guide: FOV Data (Field of View)",
+            text: `FOV determines the real size of each photo in the 3D world.
+            By default, the system assigns a standard 14° FOV, but real data is required for perfect alignment.
+            Clicking 'Download all FOV' downloads the .IMG file for each tile to find AZIMUTH_FOV and ELEVATION_FOV keys.
+            This fixes gaps or excessive overlapping in the panorama.`
+        },
+        'videoPlay': {
+            title: "Guide: Loading ready-to-play videos",
+            text: `You can load a .zip file from your local drive containing all the information 
+			needed to display a movie immediately, or manually download the desired datasets 
+			to create a new video.`
+        },
+        'videoCreate': {
+            title: "Guide: Video Creation",
+            text: `You can create a new video by manually downloading the datasets from the "Development" menu:
+			 1) Metadata Table (edrindex.tab);
+			 2) Sequence index (HTML pages <a href="https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0001/browse/rover/index.htm">1</a>, <a href="https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0002/browse/rover/index.htm">2</a>, <a href="https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0003/browse/rover/index.htm">3</a>);
+			 3) Process the desired sequence.            
+            The 'Follow' function locks the camera to the moving tile, viewing the panorama from the lander's perspective.
+			You can export the entire sequence to a self-contained ZIP file.`
+        },
+        'tab': {
+            title: "Guide: .TAB Files (Metadata)",
+            text: `<a href="https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0003/index/">.TAB files</a> are official NASA PDS databases containing raw metadata.
+            Essential for:
+            1) Timestamp: exact time of the shot;
+            2) Sol: Martian mission day;
+			3) Pointing direction or rover orientation.
+            Without a .TAB file, the system cannot associate correct Az/El positions with the scraped sequences.`
+        }
+    }
+};
+
+
+
+// Variabile globale per la lingua (impostata di default su 'it')
+let currentLang = 'it'; 
+
 
     function resetCameraCustom() {
         camera.targetScreenOffset.x = 0;
@@ -1507,7 +1654,7 @@ async function importFromZip(event) {
         progressContainer.style.display = 'none';
     }
 }
-
+/* Centered on mastcam */
 document.getElementById('followMobile').addEventListener('change', function() {
     if (this.checked && mobilePlane && mobilePlane.isVisible) {
         // Se l'utente attiva follow, usiamo la tecnica della transizione fluida
@@ -1527,32 +1674,89 @@ document.getElementById('followMobile').addEventListener('change', function() {
         ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
 
         const animObserver = scene.onBeforeRenderObservable.add(() => {
-    const followCheckbox = document.getElementById('followMobile');
-    
-    if (followCheckbox && followCheckbox.checked && mobilePlane && mobilePlane.isVisible) {
+			const followCheckbox = document.getElementById('followMobile');
+			
+			if (followCheckbox && followCheckbox.checked && mobilePlane && mobilePlane.isVisible) {
+				const h_mast = parseFloat(document.getElementById('mastSlider').value);
+				const targetPos = mobilePlane.position;
+				const mastPos = new BABYLON.Vector3(0, h_mast, 0);
+
+				// Fattore di morbidezza: 0.1 è molto fluido, 1.0 è istantaneo (a scatti)
+				// Prova 0.1 per un effetto cinematico
+				const lerpFactor = 0.1; 
+
+				// 1. Inseguiamo il Target (la tile) con LERP
+				camera.setTarget(BABYLON.Vector3.Lerp(camera.target, targetPos, lerpFactor));
+
+				// 2. Inseguiamo la posizione (il Mast) con LERP
+				// (Serve se l'utente muove lo slider dell'altezza mentre è in follow)
+				camera.setPosition(BABYLON.Vector3.Lerp(camera.position, mastPos, lerpFactor));
+
+				// 3. Pulizia inerzia per evitare derive
+				camera.inertialAlphaOffset = 0;
+				camera.inertialBetaOffset = 0;
+				camera.inertialRadiusOffset = 0;
+			}
+		});
+    }
+});
+
+
+/*  not centered on mastcam: */
+/*
+document.getElementById('followMobile').addEventListener('change', function() {
+    if (window.followObserver) {
+        scene.onBeforeRenderObservable.remove(window.followObserver);
+        window.followObserver = null;
+    }
+
+    if (this.checked && mobilePlane && mobilePlane.isVisible) {
         const h_mast = parseFloat(document.getElementById('mastSlider').value);
-        const targetPos = mobilePlane.position;
         const mastPos = new BABYLON.Vector3(0, h_mast, 0);
+        
+        // Calcoliamo lo "zoom offset" iniziale: 
+        // ovvero quanto l'utente è distante dalla Mastcam in questo momento.
+        // Se 0, la camera è esattamente sulla Mastcam.
+        let initialDist = BABYLON.Vector3.Distance(mastPos, mobilePlane.position);
+        window.userZoomOffset = initialDist - camera.radius;
 
-        // Fattore di morbidezza: 0.1 è molto fluido, 1.0 è istantaneo (a scatti)
-        // Prova 0.1 per un effetto cinematico
-        const lerpFactor = 0.1; 
+        window.followObserver = scene.onBeforeRenderObservable.add(() => {
+            const followCheckbox = document.getElementById('followMobile');
+            
+            if (followCheckbox && followCheckbox.checked && mobilePlane && mobilePlane.isVisible) {
+                const h_mast = parseFloat(document.getElementById('mastSlider').value);
+                const mastPos = new BABYLON.Vector3(0, h_mast, 0);
+                const targetPos = mobilePlane.position;
+                const lerpFactor = 0.1; 
 
-        // 1. Inseguiamo il Target (la tile) con LERP
-        camera.setTarget(BABYLON.Vector3.Lerp(camera.target, targetPos, lerpFactor));
+                // 1. Calcoliamo la distanza attuale tra Mast e Tile
+                let currentDist = BABYLON.Vector3.Distance(mastPos, targetPos);
 
-        // 2. Inseguiamo la posizione (il Mast) con LERP
-        // (Serve se l'utente muove lo slider dell'altezza mentre è in follow)
-        camera.setPosition(BABYLON.Vector3.Lerp(camera.position, mastPos, lerpFactor));
+                // 2. Se l'utente muove la rotella, aggiorniamo il suo offset personale
+                // Verifichiamo se il raggio è cambiato dall'ultimo frame (input utente)
+                // Usiamo una piccola soglia per ignorare micro-variazioni del LERP
+                if (Math.abs(camera.inertialRadiusOffset) > 0.0001) {
+                    window.userZoomOffset = currentDist - camera.radius;
+                }
 
-        // 3. Pulizia inerzia per evitare derive
-        camera.inertialAlphaOffset = 0;
-        camera.inertialBetaOffset = 0;
-        camera.inertialRadiusOffset = 0;
+                // 3. Il Target segue la Tile
+                camera.setTarget(BABYLON.Vector3.Lerp(camera.target, targetPos, lerpFactor));
+
+                // 4. Il raggio viene forzato per mantenere la camera sulla Mastcam (meno l'offset di zoom)
+                // Radius = Distanza_Mast_Tile - Offset_Zoom_Utente
+                let desiredRadius = currentDist - window.userZoomOffset;
+                camera.radius = BABYLON.Scalar.Lerp(camera.radius, desiredRadius, lerpFactor);
+
+                // 5. Pulizia inerzia
+                camera.inertialAlphaOffset = 0;
+                camera.inertialBetaOffset = 0;
+                // Non azzeriamo inertialRadiusOffset qui perché ci serve per rilevare lo zoom dell'utente
+            }
+        });
     }
 });
-    }
-});
+
+*/
 
 /**
  * Mostra o nasconde il pannello dei controlli (slider e scraping)
@@ -1568,71 +1772,19 @@ function toggleAdjustments() {
     }
 }
 
-
-
 function showHelp(topic) {
-    const helpData = {
-        'panorama': {
-            title: "Guida: CSV Panorama",
-            text: `Il file CSV è il cuore del sistema di tassellazione del terreno. 
-            Deve contenere i percorsi delle immagini (PATH_NAME), i nomi file (FILE_NAME) e le coordinate strumentali (AZIMUTH/ELEVATION).
-            
-            Ogni riga del file genera una "tile" 3D posizionata nello spazio sferico del lander. 
-            Il sistema supporta la modalità 'Replace' (sostituisce tutto il panorama attuale) o 'Append' (aggiunge nuove foto a quelle esistenti).
-            
-            È fondamentale che i nomi delle colonne corrispondano esattamente a quelli previsti dal parser (es: SURFACE_BASED_INST_AZIMUTH). 
-            Se le foto appaiono sovrapposte o distorte, verifica che l'azimuth nel CSV sia espresso in gradi decimali.`
-        },
-        'tab': {
-            title: "Guida: File .TAB (Metadati)",
-            text: `I file .TAB sono database ufficiali NASA PDS che contengono i metadati grezzi di ogni immagine scattata.
-            Questi file sono essenziali per le animazioni del rover poiché contengono due dati non presenti nei semplici file JPG:
-            1) Il Timestamp (campo 23): l'ora esatta dello scatto, usata per ordinare cronologicamente i fotogrammi.
-            2) Il Sol (campo 43): il giorno marziano della missione.
-            
-            Senza caricare un file .TAB (da URL o locale), il sistema non può associare una posizione Az/El corretta alle sequenze video del rover scoperte tramite scraping. 
-            Il database viene caricato in una 'Master Map' in memoria per un accesso istantaneo durante la navigazione.`
-        },
-        'JPG': {
-            title: "Guida: Texture Terreno",
-            text: `Il sistema gestisce due tipi di texture per il panorama: JPG e GIF.
-            Le JPG sono generalmente più leggere e adatte per una navigazione fluida del terreno statico.
-            Le GIF (se disponibili sul server PDS) possono contenere dettagli diversi o compressioni alternative.
-            
-            Puoi switchare tra le due modalità dal menu 'Visualizza'. 
-            Se una tile appare rossa, significa che la texture non è stata ancora scaricata o il link è interrotto. 
-            Usa il comando 'Scarica tutte le JPG/GIF' dal menu Sviluppo per popolare il panorama massivamente. 
-            Le immagini vengono caricate tramite un proxy per superare le restrizioni di sicurezza (CORS) dei browser moderni.`
-        },
-        'FOV': {
-            title: "Guida: Dati FOV (Field of View)",
-            text: `Il FOV (Campo Visivo) determina la dimensione reale di ogni foto nel mondo 3D.
-            Di default, il sistema assegna un FOV standard (14°), ma per un allineamento perfetto è necessario scaricare i dati reali.
-            
-            Cliccando su 'Scarica tutti i FOV', il sistema scarica il file .IMG (etichetta testuale) di ogni tile e cerca le chiavi AZIMUTH_FOV ed ELEVATION_FOV.
-            Una volta ottenuti questi valori, le tile vengono ridimensionate automaticamente. 
-            
-            Questo risolve i problemi di "buchi" nel panorama o di eccessiva sovrapposizione delle immagini, garantendo che la scala angolare corrisponda esattamente all'ottica della Mastcam.`
-        },
-        'video': {
-            title: "Guida: Sequenze Rover",
-            text: `Le sequenze video del rover vengono create tramite 'Scraping' del sito NASA PDS o importando uno ZIP dedicato.
-            Il sistema cerca file .htm che descrivono le osservazioni del rover, ne estrae le immagini GIF e le incrocia con il database .TAB caricato.
-            
-            Una volta elaborata la sequenza, compare uno slider 'Mobile Tile'. Muovendolo, puoi vedere il movimento del rover nel tempo.
-            La funzione 'Follow' aggancia la camera alla tile mobile, permettendoti di osservare il panorama come se fossi a bordo del Mastcam.
-            
-            Puoi esportare l'intera sequenza (immagini + metadati) in un file ZIP auto-consistente. Questo file potrà essere ricaricato in futuro senza dover rifare lo scraping o ricaricare il file .TAB.`
-        }
-    };
+    // helpTranslations è l'oggetto con i testi lunghi (panorama, tab, JPG, ecc.)
+    const langData = helpTranslations[currentLang] || helpTranslations['it'];
+    const data = langData[topic];
 
-    const data = helpData[topic];
     if (data) {
-        document.getElementById('helpTitle').innerText = data.title;
-        document.getElementById('helpBody').innerText = data.text;
+        document.getElementById('helpTitle').innerHTML = data.title;
+        document.getElementById('helpBody').innerHTML = data.text;
         document.getElementById('helpModal').style.display = 'flex';
     }
 }
+
+
 
 function closeHelp(event) {
     if (event.target.id === 'helpModal') {
@@ -1649,6 +1801,142 @@ function toggleSection(containerId) {
     // Forza il ricalcolo del layout per Babylon (opzionale)
     setTimeout(() => { engine.resize(); }, 350);
 }
+
+
+
+const uiTranslations = {
+    it: {
+        "menu-file": "📁 File",
+        "menu-file-terrain": "📥 Carica terreno",
+        "menu-file-rover": "📦 Carica animazione rover",
+        "menu-view": "🔍 Visualizza",
+        "menu-view-jpg": "Terreno JPG",
+        "menu-view-gif": "Terreno GIF",
+        "menu-developer": "Sviluppo",
+        "menu-developer-controlpanel": "⚙️ Pannello di controllo",
+        "menu-developer-csvLoad": "📂 Carica da CSV",
+        "menu-developer-csvAppend": "➕ Aggiungi da CSV",
+        "menu-developer-jpg": "🖼️ Scarica tutte le JPG",
+        "menu-developer-gif": "🎞️ Scarica tutte le GIF",
+        "menu-developer-fov": "📏 Scarica tutti i FOV (IMG)",
+        "menu-export-label": "Esporta risultati",
+        "menu-developer-export-terrain": "📤 Esporta terreno",
+        "menu-developer-export-video": "📦 Esporta animazione rover",
+        "menu-help": "Guida",
+        "menu-help-csv": "Panorama: file CSV",
+        "menu-help-jpg": "Panorama: GIF/JPG terreno",
+        "menu-help-fov": "Panorama: FOV terreno",
+        "menu-help-videoLoad": "Video rover: caricamento",
+        "menu-help-videoCreate": "Video rover: creazione",
+        "menu-help-tab": "Video rover: File .TAB",
+        // Sidebar e sezioni
+        "section-rover": "Animazione Rover",
+        "section-settings": "Regolazioni Panorama",
+        "section-list": "Elenco Immagini",
+        "label-tab": "1) Tabella metadati:",
+        "label-index": "2) Indice sequenze:",
+        "label-avail": "3) Sequenze disponibili:",
+		"label-radius" : "Raggio sfera",
+		"label-scale" : "Dimensione tile",
+		"label-height" : "Altezza camera",
+		"label-list" : "Elenco immagini",
+		"label-visible" : "Visibili",
+        "stat-vis": "Visibili",
+        "btn-close": "Chiudi",
+        "sys-ready": "Sistema pronto."
+    },
+    en: {
+        "menu-file": "📁 File",
+        "menu-file-terrain": "📥 Load terrain",
+        "menu-file-rover": "📦 Load rover animation",
+        "menu-view": "🔍 View",
+        "menu-view-jpg": "Terrain JPG",
+        "menu-view-gif": "Terrain GIF",
+        "menu-developer": "Development",
+        "menu-developer-controlpanel": "⚙️ Control Panel",
+        "menu-developer-csvLoad": "📂 Load from CSV",
+        "menu-developer-csvAppend": "➕ Append from CSV",
+        "menu-developer-jpg": "🖼️ Download all JPGs",
+        "menu-developer-gif": "🎞️ Download all GIFs",
+        "menu-developer-fov": "📏 Download all FOVs (IMG)",
+        "menu-export-label": "Export results",
+        "menu-developer-export-terrain": "📤 Export terrain",
+        "menu-developer-export-video": "📦 Export rover animation",
+        "menu-help": "Help",
+        "menu-help-csv": "Panorama: CSV file",
+        "menu-help-jpg": "Panorama: terrain GIF/JPG",
+        "menu-help-fov": "Panorama: terrain FOV",
+        "menu-help-videoLoad": "Rover video: loading",
+        "menu-help-videoCreate": "Rover video: creation",
+        "menu-help-tab": "Rover video: .TAB File",
+        // Sidebar and sections
+        "section-rover": "Rover Animation",
+        "section-settings": "Panorama Settings",
+        "section-list": "Image List",
+        "label-tab": "1) Metadata table:",
+        "label-index": "2) Sequence index:",
+        "label-avail": "3) Available sequences:",
+		"label-radius" : "Sphere radius",
+		"label-scale" : "Tile size",
+		"label-height" : "Camera height",
+		"label-list" : "Images list",
+		"label-visible" : "Visible",        
+		"stat-vis": "Visible",
+        "btn-close": "Close",
+        "sys-ready": "System ready."
+    }
+};
+
+
+
+
+function changeLanguage(lang) {
+    currentLang = lang;
+    const t = uiTranslations[lang];
+
+    // Seleziona tutto ciò che ha un ID o un data-i18n
+    document.querySelectorAll('[id], [data-i18n]').forEach(el => {
+        // Priorità all'attributo data-i18n, altrimenti usa l'id
+        const key = el.getAttribute('data-i18n') || el.id;
+        const translation = t[key];
+
+        if (!translation) return;
+
+        // --- CASO 1: INPUT RADIO (Terreno JPG/GIF) ---
+        if (el.tagName === 'INPUT' && el.type === 'radio') {
+            if (el.nextSibling && el.nextSibling.nodeType === 3) {
+                el.nextSibling.textContent = " " + translation;
+            }
+            return;
+        }
+
+        // --- CASO 2: SEZIONI COLLASSABILI (section-rover, etc) ---
+        // Se l'ID è sul container, dobbiamo tradurre solo il titolo interno
+        if (el.classList.contains('section-container')) {
+            const title = el.querySelector('.section-title');
+            if (title) title.innerText = translation;
+            return;
+        }
+
+        // --- CASO 3: MENU CON TENDINA (File, Visualizza, etc) ---
+        // Cambiamo solo il nodo di testo per non cancellare il div "dropdown"
+        if (el.classList.contains('menu-item')) {
+            let textNode = Array.from(el.childNodes).find(node => 
+                node.nodeType === 3 && node.textContent.trim().length > 0
+            );
+            if (textNode) textNode.textContent = translation;
+            return;
+        }
+
+        // --- CASO 4: ELEMENTI SEMPLICI (Label, Status, Bottoni) ---
+        // Se non è uno dei casi sopra, cambia il testo direttamente
+        el.innerText = translation;
+    });
+
+    console.log("Lingua impostata su:", lang);
+}
+
+
 
 
 
