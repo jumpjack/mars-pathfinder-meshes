@@ -1,11 +1,22 @@
-<img width="957" height="659" alt="image" src="https://github.com/user-attachments/assets/4cad5aa5-e514-4b0b-8989-565845b05d92" />
+<img width="1069" height="611" alt="image" src="https://github.com/user-attachments/assets/7c923dd1-0f07-46c8-9175-03b9f730ffbd" />
 
 
 This page allows viewing two types of data:
 - Panoramas taken by the lander
 - All pictures of the rover taken by the lander during  rover operations, in movie-like sequence
 
-## Panoramas
+The page works both if downloaded locally or if accessed online, see [DEMO](https://jumpjack.github.io/mars-pathfinder-meshes/rover-movies/pathfinder-panoviewer.html).
+
+## Ready data
+
+You can directly load a ready-made GLB file (3d model) of the panorama and a .zip file of rover movie directly from FILE menu. Note that original NASA datasets are 3 (mipm_0001, mpim_0002, mpim_0003), but due to github size contraints the mpim_0002 dataset has been split in 2 parts.
+
+
+## Custom data
+
+You can also create panorama and video from scratch using DEVELOPER menu
+
+### Panoramas
 
 To view panoramas, download in advance the raw version of one or more of these csv files, containing links to the tiles manually extracted  from index pages ([1](https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0001/browse/mars/index.htm), 
 [2](https://planetarydata.jpl.nasa.gov/img/data/mpfl-m-imp-2-edr-v1.0/mpim_0002/browse/mars/index.htm), 
@@ -32,8 +43,7 @@ but there are also mpim_0001 and mpim_0003 available (edit the link manually). O
 show its contents (not needed for processing, but useful to decide which sub-page to select) or MOSTRA/SHOW to process it.
 
 Once the page is processed, the list below will be populated with available sequences: choose the one labeled with "movie" in the index page loaded before,
-then click APRI/OPEN to preview the amount of images available, then MOSTRA/SHOW to load all metadata (each image will require 3-4 seconds to download ad procerss).
-
+then click the button to process the movie.
 Once all images and metadata have been downloaded, a slider will be enabled, allowing to browse/view all images overlayed to the panorama, showing how Sojourner
 moved around, sniffing, digging and taking pictures. :-)
 
